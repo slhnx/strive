@@ -31,7 +31,7 @@ export const Header = () => {
           : "bg-transparent"
       }`}
     >
-      <nav className="container mx-auto px-6 py-4">
+      <nav className="container mx-auto px-6 py-4 bg-white md:bg-transparent">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center gap-2">
