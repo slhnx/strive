@@ -1,321 +1,94 @@
 "use client";
+import { motion } from "framer-motion";
+import { Button } from "@/components/retroui/Button";
+import { ArrowRight, Play } from "lucide-react";
 
-import React from "react";
-import Link from "next/link";
-import { ChevronRight, Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { AnimatedGroup } from "@/components/ui/animated-group";
-import { cn } from "@/lib/utils";
-import { useScroll } from "motion/react";
-import Image from "next/image";
-
-const transitionVariants = {
-  item: {
-    hidden: {
-      opacity: 0,
-      filter: "blur(12px)",
-      y: 12,
-    },
-    visible: {
-      opacity: 1,
-      filter: "blur(0px)",
-      y: 0,
-      transition: {
-        type: "spring",
-        bounce: 0.3,
-        duration: 1.5,
-      },
-    },
-  },
-};
-
-export function HeroSection() {
+export const HeroSection = () => {
   return (
-    <>
-      <HeroHeader />
-      <main className="overflow-hidden">
-        <section>
-          <div className="relative pt-24">
-            <div className="absolute inset-0 -z-10 size-full [background:radial-gradient(125%_125%_at_50%_100%,transparent_0%,var(--background)_75%)]"></div>
-            <div className="mx-auto max-w-5xl px-6">
-              <div className="sm:mx-auto lg:mr-auto">
-                <AnimatedGroup
-                  variants={
-                    {
-                      container: {
-                        visible: {
-                          transition: {
-                            staggerChildren: 0.05,
-                            delayChildren: 0.75,
-                          },
-                        },
-                      },
-                      ...transitionVariants,
-                    } as any
-                  }
-                >
-                  <h1 className="mt-8 max-w-2xl text-balance text-5xl font-medium md:text-6xl lg:mt-16">
-                    Your Second Brain. But Practical.
-                  </h1>
-                  <p className="mt-8 max-w-2xl text-pretty text-lg font-secondary-foreground">
-                    Simple enough to start in minutes. Powerful enough to run
-                    your entire workflow.
-                  </p>
-                  <div className="mt-12 flex items-center gap-2">
-                    <div
-                      key={1}
-                      className="bg-foreground/10 rounded-[14px] border p-0.5"
-                    >
-                      <Button asChild size="lg">
-                        <Link href="#link">
-                          <span className="text-nowrap">Start Building</span>
-                        </Link>
-                      </Button>
-                    </div>
-                    <Button key={2} asChild size="lg" variant="ghost">
-                      <Link href="#link">
-                        <span className="text-nowrap">Request a demo</span>
-                      </Link>
-                    </Button>
-                  </div>
-                </AnimatedGroup>
-              </div>
-            </div>
-            <AnimatedGroup
-              variants={
-                {
-                  container: {
-                    visible: {
-                      transition: {
-                        staggerChildren: 0.05,
-                        delayChildren: 0.75,
-                      },
-                    },
-                  },
-                  ...transitionVariants,
-                } as any
-              }
+    <section className="relative overflow-hidden pt-52 pb-20">
+      {/* Retro background pattern */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute top-0 left-1/4 w-64 h-64 bg-accent rounded-full blur-3xl opacity-30" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl opacity-40" />
+      </div>
+
+      <div className="container mx-auto px-6">
+        <div className="max-w-6xl mx-auto">
+          {/* Hero content */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded bg-accent border-2 border-black shadow-neo-sm text-sm font-bold mb-6"
             >
-              <div className="relative -mr-56 mt-8 overflow-hidden px-2 sm:mr-0 sm:mt-12 md:mt-20">
-                <div
-                  aria-hidden
-                  className="bg-gradient-to-b to-background absolute inset-0 z-10 from-transparent from-35%"
-                />
-                <div className="inset-shadow-2xs ring-background dark:inset-shadow-white/20 bg-background relative mx-auto max-w-5xl overflow-hidden rounded-2xl border p-4 shadow-lg shadow-zinc-950/15 ring-1">
-                  <Image
-                    className="bg-background aspect-15/8 relative hidden rounded-2xl dark:block"
-                    src="/demo.png"
-                    alt="app screen"
-                    width="2700"
-                    height="1440"
-                  />
-                  <img
-                    className="z-2 border-border/25 aspect-15/8 relative rounded-2xl border dark:hidden"
-                    src="/demo.png"
-                    alt="app screen"
-                    width="2700"
-                    height="1440"
-                  />
-                </div>
-              </div>
-            </AnimatedGroup>
-          </div>
-        </section>
-        <section className="bg-background pb-16 pt-16 md:pb-32">
-          <div className="group relative m-auto max-w-5xl px-6">
-            <div className="absolute inset-0 z-10 flex scale-95 items-center justify-center opacity-0 duration-500 group-hover:scale-100 group-hover:opacity-100">
-              <Link
-                href="/"
-                className="block text-sm duration-150 hover:opacity-75"
-              >
-                <span> Meet Our Customers</span>
+              <span className="font-montserrat relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+              </span>
+              Transform Your Daily Routine
+            </motion.div>
 
-                <ChevronRight className="ml-1 inline-block size-3" />
-              </Link>
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="text-xl md:text-7xl font-black mb-6 tracking-tight font-montserrat"
+            >
+              Level Up Your Life,
+              <br />
+              <span className="text-primary">One Habit at a Time</span>
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="text-xl md:text-lg text-muted-foreground mb-10 max-w-3xl mx-auto font-medium"
+            >
+              A no-nonsense tracker that turns daily discipline into XP. Build
+              streaks, earn rewards, and watch yourself grow.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+            >
+              <Button size="lg">
+                Start Your Journey
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+              <Button variant="outline" size="lg">
+                <Play className="mr-2 h-5 w-5" />
+                Watch Demo
+              </Button>
+            </motion.div>
+          </motion.div>
+
+          {/* Hero image */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="relative"
+          >
+            <div className="relative rounded border-4 border-black shadow-neo-xl overflow-hidden bg-card">
+              <img
+                src="/hero-dashboard.jpg"
+                alt="Habit Tracker Dashboard"
+                className="w-full h-auto"
+              />
             </div>
-            <div className="group-hover:blur-xs mx-auto mt-12 grid max-w-2xl grid-cols-4 gap-x-12 gap-y-8 transition-all duration-500 group-hover:opacity-50 sm:gap-x-16 sm:gap-y-14">
-              <div className="flex">
-                <img
-                  className="mx-auto h-5 w-fit dark:invert"
-                  src="https://html.tailus.io/blocks/customers/nvidia.svg"
-                  alt="Nvidia Logo"
-                  height="20"
-                  width="auto"
-                />
-              </div>
-
-              <div className="flex">
-                <img
-                  className="mx-auto h-4 w-fit dark:invert"
-                  src="https://html.tailus.io/blocks/customers/column.svg"
-                  alt="Column Logo"
-                  height="16"
-                  width="auto"
-                />
-              </div>
-              <div className="flex">
-                <img
-                  className="mx-auto h-4 w-fit dark:invert"
-                  src="https://html.tailus.io/blocks/customers/github.svg"
-                  alt="GitHub Logo"
-                  height="16"
-                  width="auto"
-                />
-              </div>
-              <div className="flex">
-                <img
-                  className="mx-auto h-5 w-fit dark:invert"
-                  src="https://html.tailus.io/blocks/customers/nike.svg"
-                  alt="Nike Logo"
-                  height="20"
-                  width="auto"
-                />
-              </div>
-              <div className="flex">
-                <img
-                  className="mx-auto h-5 w-fit dark:invert"
-                  src="https://html.tailus.io/blocks/customers/lemonsqueezy.svg"
-                  alt="Lemon Squeezy Logo"
-                  height="20"
-                  width="auto"
-                />
-              </div>
-              <div className="flex">
-                <img
-                  className="mx-auto h-4 w-fit dark:invert"
-                  src="https://html.tailus.io/blocks/customers/laravel.svg"
-                  alt="Laravel Logo"
-                  height="16"
-                  width="auto"
-                />
-              </div>
-              <div className="flex">
-                <img
-                  className="mx-auto h-7 w-fit dark:invert"
-                  src="https://html.tailus.io/blocks/customers/lilly.svg"
-                  alt="Lilly Logo"
-                  height="28"
-                  width="auto"
-                />
-              </div>
-
-              <div className="flex">
-                <img
-                  className="mx-auto h-6 w-fit dark:invert"
-                  src="https://html.tailus.io/blocks/customers/openai.svg"
-                  alt="OpenAI Logo"
-                  height="24"
-                  width="auto"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
-    </>
-  );
-}
-
-const menuItems = [
-  { name: "Features", href: "#link" },
-  { name: "Solution", href: "#link" },
-  { name: "Pricing", href: "#link" },
-  { name: "About", href: "#link" },
-];
-
-export const HeroHeader = () => {
-  const [menuState, setMenuState] = React.useState(false);
-  const [scrolled, setScrolled] = React.useState(false);
-
-  const { scrollYProgress } = useScroll();
-
-  React.useEffect(() => {
-    const unsubscribe = scrollYProgress.on("change", (latest) => {
-      setScrolled(latest > 0.05);
-    });
-    return () => unsubscribe();
-  }, [scrollYProgress]);
-
-  return (
-    <header>
-      <nav
-        data-state={menuState && "active"}
-        className={cn(
-          "group fixed z-20 w-full border-b transition-colors duration-150",
-          scrolled && "bg-background/50 backdrop-blur-3xl"
-        )}
-      >
-        <div className="mx-auto max-w-5xl px-6 transition-all duration-300">
-          <div className="relative flex flex-wrap items-center justify-between gap-6 py-3 lg:gap-0 lg:py-4">
-            <div className="flex w-full items-center justify-between gap-12 lg:w-auto">
-              <Link
-                href="/"
-                aria-label="home"
-                className="flex items-center space-x-2"
-              >
-                <Logo />
-              </Link>
-
-              <button
-                onClick={() => setMenuState(!menuState)}
-                aria-label={menuState == true ? "Close Menu" : "Open Menu"}
-                className="relative z-20 -m-2.5 -mr-4 block cursor-pointer p-2.5 lg:hidden"
-              >
-                <Menu className="group-data-[state=active]:rotate-180 group-data-[state=active]:scale-0 group-data-[state=active]:opacity-0 m-auto size-6 duration-200" />
-                <X className="group-data-[state=active]:rotate-0 group-data-[state=active]:scale-100 group-data-[state=active]:opacity-100 absolute inset-0 m-auto size-6 -rotate-180 scale-0 opacity-0 duration-200" />
-              </button>
-
-              <div className="hidden lg:block">
-                <ul className="flex gap-8 text-sm">
-                  {menuItems.map((item, index) => (
-                    <li key={index}>
-                      <Link
-                        href={item.href}
-                        className="text-muted-foreground hover:text-accent-foreground block duration-150"
-                      >
-                        <span>{item.name}</span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-            <div className="bg-background group-data-[state=active]:block lg:group-data-[state=active]:flex mb-6 hidden w-full flex-wrap items-center justify-end space-y-8 rounded-3xl border p-6 shadow-2xl shadow-zinc-300/20 md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none dark:shadow-none dark:lg:bg-transparent">
-              <div className="lg:hidden">
-                <ul className="space-y-6 text-base">
-                  {menuItems.map((item, index) => (
-                    <li key={index}>
-                      <Link
-                        href={item.href}
-                        className="text-muted-foreground hover:text-accent-foreground block duration-150"
-                      >
-                        <span>{item.name}</span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
-                <Button asChild variant="outline" size="sm">
-                  <Link href="#">
-                    <span>Login</span>
-                  </Link>
-                </Button>
-                <Button asChild size="sm">
-                  <Link href="#">
-                    <span>Sign Up</span>
-                  </Link>
-                </Button>
-              </div>
-            </div>
-          </div>
+          </motion.div>
         </div>
-      </nav>
-    </header>
+      </div>
+    </section>
   );
-};
-
-const Logo = ({ className }: { className?: string }) => {
-  return <Image src="/logo.png" alt="logo" width={100} height={30} />;
 };
