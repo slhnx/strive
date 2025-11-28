@@ -4,6 +4,7 @@ import { Montserrat } from "next/font/google";
 // @ts-ignore
 import "./globals.css";
 import { Header } from "@/components/Header";
+import { Providers } from "@/components/providers";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -22,10 +23,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={`${montserrat.variable} antialiased`}>
-        <Header />
-        {children}
+        <Providers>
+          <Header />
+          {children}
+        </Providers>
       </body>
     </html>
   );

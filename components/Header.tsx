@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/retroui/Button";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { ThemeToggler } from "./theme-toggler";
+import Link from "next/link";
 
 const navigation = [
   { name: "Features", href: "#features" },
@@ -31,17 +33,17 @@ export const Header = () => {
           : "bg-transparent"
       }`}
     >
-      <nav className="container mx-auto px-6 py-4 bg-white md:bg-transparent">
+      <nav className="container mx-auto px-6 py-4 lg:dark:bg-transparent bg-white dark:bg-neutral-900 lg:bg-transparent">
         <div className="flex items-center justify-between">
-          {/* Logo */}
           <div className="flex items-center gap-2">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center">
               <span className="text-white font-bold text-xl">S</span>
             </div>
-            <span className="text-xl font-bold font-pixel">Strive</span>
+            <Link href="/">
+              <span className="text-xl font-bold font-pixel">Strive</span>
+            </Link>
           </div>
 
-          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             {navigation.map((item) => (
               <a
@@ -54,7 +56,6 @@ export const Header = () => {
             ))}
           </div>
 
-          {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-4">
             <Button variant="ghost" size="sm">
               Log In
@@ -62,6 +63,7 @@ export const Header = () => {
             <Button variant="default" size="sm">
               Sign Up
             </Button>
+            <ThemeToggler />
           </div>
 
           {/* Mobile menu button */}
@@ -107,6 +109,7 @@ export const Header = () => {
                   </Button>
                 </div>
               </div>
+              <ThemeToggler />
             </motion.div>
           )}
         </AnimatePresence>

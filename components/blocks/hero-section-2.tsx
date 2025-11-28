@@ -1,17 +1,15 @@
 "use client";
-import { motion } from "framer-motion";
 import { Button } from "@/components/retroui/Button";
+import { motion } from "framer-motion";
 import { ArrowRight, Play } from "lucide-react";
 
 export const HeroSection = () => {
   return (
     <section className="relative overflow-hidden pt-28 sm:pt-40 md:pt-52 pb-10 sm:pb-16 md:pb-20">
-      {/* Retro background pattern */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-0 left-1/4 w-40 h-40 sm:w-56 sm:h-56 md:w-64 md:h-64 bg-accent rounded-full blur-3xl opacity-30" />
         <div className="absolute bottom-0 right-1/4 w-56 h-56 sm:w-72 sm:h-72 md:w-96 md:h-96 bg-primary/20 rounded-full blur-3xl opacity-40" />
       </div>
-
       <div className="container mx-auto px-4 sm:px-6">
         <div className="max-w-5xl mx-auto">
           {/* Hero content */}
