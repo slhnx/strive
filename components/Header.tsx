@@ -5,6 +5,7 @@ import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ThemeToggler } from "./theme-toggler";
 import Link from "next/link";
+import { SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
 
 const navigation = [
   { name: "Features", href: "#features" },
@@ -13,6 +14,7 @@ const navigation = [
 ];
 
 export const Header = () => {
+  const { user } = useUser();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -57,12 +59,20 @@ export const Header = () => {
           </div>
 
           <div className="hidden md:flex items-center gap-4">
-            <Button variant="ghost" size="sm">
-              Log In
-            </Button>
-            <Button variant="default" size="sm">
-              Sign Up
-            </Button>
+            {!user ? (
+              <SignInButton>
+                <Button variant="default" size="sm">
+                  Sign Up
+                </Button>
+              </SignInButton>
+            ) : (
+              <SignOutButton>
+                <Button variant="default" size="sm">
+                  Sign Out
+                </Button>
+              </SignOutButton>
+            )}
+
             <ThemeToggler />
           </div>
 
