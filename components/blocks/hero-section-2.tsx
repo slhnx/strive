@@ -1,4 +1,5 @@
-"use client";
+'use client';
+
 import { Button } from "@/components/retroui/Button";
 import { motion } from "framer-motion";
 import { ArrowRight, Play } from "lucide-react";
@@ -12,7 +13,6 @@ export const HeroSection = () => {
       </div>
       <div className="container mx-auto px-4 sm:px-6">
         <div className="max-w-5xl mx-auto">
-          {/* Hero content */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -23,11 +23,11 @@ export const HeroSection = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded bg-accent border-2 border-black shadow-neo-sm text-xs sm:text-sm font-bold mb-4 sm:mb-6"
+              className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded bg-accent border-4 border-black shadow-neo-sm text-xs sm:text-sm font-bold mb-4 sm:mb-6"
             >
-              <span className="font-montserrat relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-foreground opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-foreground"></span>
               </span>
               Transform Your Daily Routine
             </motion.div>
@@ -36,7 +36,7 @@ export const HeroSection = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-3xl sm:text-5xl md:text-7xl font-black mb-4 sm:mb-6 tracking-tight font-montserrat"
+              className="text-3xl sm:text-5xl md:text-7xl font-black mb-4 sm:mb-6 tracking-tight"
             >
               Level Up Your Life,
               <br />
@@ -59,7 +59,7 @@ export const HeroSection = () => {
               transition={{ duration: 0.6, delay: 0.5 }}
               className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center"
             >
-              <Button size="lg" className="w-full sm:w-auto">
+              <Button size="lg" className="w-full sm:w-auto group">
                 Start Your Journey
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
@@ -70,7 +70,6 @@ export const HeroSection = () => {
             </motion.div>
           </motion.div>
 
-          {/* Hero image */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
@@ -80,7 +79,7 @@ export const HeroSection = () => {
             <div className="relative rounded border-4 border-black shadow-neo-xl overflow-hidden bg-card max-w-4xl mx-auto">
               <img
                 src="/hero-dashboard.jpg"
-                alt="Habit Tracker Dashboard"
+                alt="HabitQuest Dashboard showcasing habit tracking interface"
                 className="w-full h-auto object-cover"
               />
             </div>
