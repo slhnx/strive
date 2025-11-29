@@ -85,7 +85,7 @@
 }
 
 .dark {
-  --background: oklch(17.03% 0.00828 285.462);
+  --background: oklch(0.141 0.005 285.823);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.21 0.006 285.885);
   --card-foreground: oklch(0.985 0 0);
@@ -118,9 +118,6 @@
   --sidebar-ring: oklch(0.408 0.123 38.172);
 }
 
-
-
-
 @layer base {
   * {
     @apply border-border outline-ring/50 font-sans;
@@ -130,10 +127,11 @@
   }
 }
 
-button {
- font-family: "Pixel Emulator";
-}
 
 .font-pixel {
  font-family: "Pixel Emulator";
+}
+
+.hard-shadow {
+  @apply shadow-[6px_6px_0px_0px_#000000] dark:shadow-[5px_5px_0px_0px_#fff] border-2 border-black dark:border-white;
 }
