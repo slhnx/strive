@@ -111,12 +111,19 @@ export const Header = () => {
                   </a>
                 ))}
                 <div className="pt-4 space-y-2">
-                  <Button variant="ghost" size="sm" className="w-full">
-                    Log In
-                  </Button>
-                  <Button variant="default" size="sm" className="w-full">
-                    Sign Up
-                  </Button>
+                  {!user ? (
+                    <SignInButton>
+                      <Button variant="default" size="sm">
+                        Sign Up
+                      </Button>
+                    </SignInButton>
+                  ) : (
+                    <SignOutButton>
+                      <Button variant="default" size="sm">
+                        Sign Out
+                      </Button>
+                    </SignOutButton>
+                  )}
                 </div>
               </div>
               <ThemeToggler />
