@@ -3,28 +3,23 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
-// Retro base theme
+// Retro base
 const retroBase =
   "bg-white text-black dark:bg-black dark:text-white border-2 border-black dark:border-white rounded-none";
 
-// Hard retro shadow
+// Retro hard shadow
 const retroShadow =
   "shadow-[4px_4px_0_0_black] dark:shadow-[4px_4px_0_0_white]";
 
-
-function Input({ className, type, ...props }: React.ComponentProps<"input">) {
+function Textarea({ className, ...props }: React.ComponentProps<"textarea">) {
   return (
-    <input
-      type={type}
-      data-slot="input"
+    <textarea
+      data-slot="textarea"
       className={cn(
-        // Base retro styling
         retroBase,
         retroShadow,
-        "h-9 w-full px-3 py-1 text-sm",
+        "w-full min-h-20 px-3 py-2 text-sm resize-none",
 
-        // Remove default browser stuff
-        "outline-none transition-all duration-75",
         // Disabled
         "disabled:pointer-events-none disabled:opacity-50",
 
@@ -35,4 +30,4 @@ function Input({ className, type, ...props }: React.ComponentProps<"input">) {
   );
 }
 
-export { Input };
+export { Textarea };

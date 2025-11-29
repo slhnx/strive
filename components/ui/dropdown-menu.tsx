@@ -5,22 +5,38 @@ import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
 import { CheckIcon, ChevronRightIcon, CircleIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+// BASE + THEMING (C1 RULESET)
 const baseBg = "bg-white text-black dark:bg-black dark:text-white";
 const hoverBg =
-  "hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black";
+  "hover:bg-primary hover:text-white dark:hover:bg-primary dark:hover:text-black";
 const focusBg =
-  "focus:bg-black focus:text-white dark:focus:bg-white dark:focus:text-black";
+  "focus:bg-primary focus:text-white dark:focus:bg-primary dark:focus:text-black";
+const activeBg =
+  "data-[state=active]:bg-primary data-[state=active]:text-white dark:data-[state=active]:text-black";
 
-function DropdownMenu(props: React.ComponentProps<typeof DropdownMenuPrimitive.Root>) {
+function DropdownMenu(
+  props: React.ComponentProps<typeof DropdownMenuPrimitive.Root>
+) {
   return <DropdownMenuPrimitive.Root data-slot="dropdown-menu" {...props} />;
 }
 
-function DropdownMenuPortal(props: React.ComponentProps<typeof DropdownMenuPrimitive.Portal>) {
-  return <DropdownMenuPrimitive.Portal data-slot="dropdown-menu-portal" {...props} />;
+function DropdownMenuPortal(
+  props: React.ComponentProps<typeof DropdownMenuPrimitive.Portal>
+) {
+  return (
+    <DropdownMenuPrimitive.Portal data-slot="dropdown-menu-portal" {...props} />
+  );
 }
 
-function DropdownMenuTrigger(props: React.ComponentProps<typeof DropdownMenuPrimitive.Trigger>) {
-  return <DropdownMenuPrimitive.Trigger data-slot="dropdown-menu-trigger" {...props} />;
+function DropdownMenuTrigger(
+  props: React.ComponentProps<typeof DropdownMenuPrimitive.Trigger>
+) {
+  return (
+    <DropdownMenuPrimitive.Trigger
+      data-slot="dropdown-menu-trigger"
+      {...props}
+    />
+  );
 }
 
 function DropdownMenuContent({
@@ -51,24 +67,32 @@ function DropdownMenuContent({
   );
 }
 
-function DropdownMenuGroup(props: React.ComponentProps<typeof DropdownMenuPrimitive.Group>) {
-  return <DropdownMenuPrimitive.Group data-slot="dropdown-menu-group" {...props} />;
+function DropdownMenuGroup(
+  props: React.ComponentProps<typeof DropdownMenuPrimitive.Group>
+) {
+  return (
+    <DropdownMenuPrimitive.Group data-slot="dropdown-menu-group" {...props} />
+  );
 }
 
 function DropdownMenuItem({
   className,
   inset,
   ...props
-}: React.ComponentProps<typeof DropdownMenuPrimitive.Item> & { inset?: boolean }) {
+}: React.ComponentProps<typeof DropdownMenuPrimitive.Item> & {
+  inset?: boolean;
+}) {
   return (
     <DropdownMenuPrimitive.Item
       data-slot="dropdown-menu-item"
       data-inset={inset}
       className={cn(
         baseBg,
-        "rounded-none select-none cursor-default px-2 py-1.5 flex items-center gap-2",
+        "cursor-default select-none flex items-center gap-2 px-2 py-1.5 rounded-none text-sm",
+        "border border-transparent", // keeps spacing consistent
         hoverBg,
         focusBg,
+        activeBg,
         "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
         inset && "pl-8",
         className
@@ -89,17 +113,17 @@ function DropdownMenuCheckboxItem({
       data-slot="dropdown-menu-checkbox-item"
       className={cn(
         baseBg,
-        "rounded-none select-none cursor-default relative",
-        "py-1.5 pr-2 pl-8 text-sm flex items-center gap-2",
+        "cursor-default select-none relative flex items-center gap-2 px-2 py-1.5 rounded-none text-sm",
         hoverBg,
         focusBg,
+        activeBg,
         "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
         className
       )}
       checked={checked}
       {...props}
     >
-      <span className="pointer-events-none absolute left-2 flex size-3.5 items-center justify-center">
+      <span className="pointer-events-none absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
         <DropdownMenuPrimitive.ItemIndicator>
           <CheckIcon className="size-4" />
         </DropdownMenuPrimitive.ItemIndicator>
@@ -112,7 +136,12 @@ function DropdownMenuCheckboxItem({
 function DropdownMenuRadioGroup(
   props: React.ComponentProps<typeof DropdownMenuPrimitive.RadioGroup>
 ) {
-  return <DropdownMenuPrimitive.RadioGroup data-slot="dropdown-menu-radio-group" {...props} />;
+  return (
+    <DropdownMenuPrimitive.RadioGroup
+      data-slot="dropdown-menu-radio-group"
+      {...props}
+    />
+  );
 }
 
 function DropdownMenuRadioItem({
@@ -125,21 +154,21 @@ function DropdownMenuRadioItem({
       data-slot="dropdown-menu-radio-item"
       className={cn(
         baseBg,
-        "rounded-none select-none cursor-default relative",
-        "py-1.5 pr-2 pl-8 text-sm flex items-center gap-2",
+        "cursor-default select-none relative flex items-center gap-2 px-2 py-1.5 rounded-none text-sm",
         hoverBg,
         focusBg,
+        activeBg,
         "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
         className
       )}
       {...props}
     >
-      <span className="pointer-events-none absolute left-2 flex size-3.5 items-center justify-center">
+      <span className="pointer-events-none absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
         <DropdownMenuPrimitive.ItemIndicator>
           <CircleIcon className="size-2 fill-current" />
         </DropdownMenuPrimitive.ItemIndicator>
       </span>
-      {children}
+      <span className="ml-6">{children}</span>
     </DropdownMenuPrimitive.RadioItem>
   );
 }
@@ -148,14 +177,16 @@ function DropdownMenuLabel({
   className,
   inset,
   ...props
-}: React.ComponentProps<typeof DropdownMenuPrimitive.Label> & { inset?: boolean }) {
+}: React.ComponentProps<typeof DropdownMenuPrimitive.Label> & {
+  inset?: boolean;
+}) {
   return (
     <DropdownMenuPrimitive.Label
       data-slot="dropdown-menu-label"
       data-inset={inset}
       className={cn(
         baseBg,
-        "font-medium px-2 py-1.5 rounded-none",
+        "px-2 py-1.5 text-sm font-medium rounded-none",
         inset && "pl-8",
         className
       )}
@@ -184,13 +215,18 @@ function DropdownMenuShortcut({
   return (
     <span
       data-slot="dropdown-menu-shortcut"
-      className={cn("text-black dark:text-white ml-auto text-xs tracking-widest", className)}
+      className={cn(
+        "ml-auto text-xs tracking-widest text-black dark:text-white",
+        className
+      )}
       {...props}
     />
   );
 }
 
-function DropdownMenuSub(props: React.ComponentProps<typeof DropdownMenuPrimitive.Sub>) {
+function DropdownMenuSub(
+  props: React.ComponentProps<typeof DropdownMenuPrimitive.Sub>
+) {
   return <DropdownMenuPrimitive.Sub data-slot="dropdown-menu-sub" {...props} />;
 }
 
@@ -199,16 +235,19 @@ function DropdownMenuSubTrigger({
   inset,
   children,
   ...props
-}: React.ComponentProps<typeof DropdownMenuPrimitive.SubTrigger> & { inset?: boolean }) {
+}: React.ComponentProps<typeof DropdownMenuPrimitive.SubTrigger> & {
+  inset?: boolean;
+}) {
   return (
     <DropdownMenuPrimitive.SubTrigger
       data-slot="dropdown-menu-sub-trigger"
       data-inset={inset}
       className={cn(
         baseBg,
-        "rounded-none px-2 py-1.5 flex items-center gap-2 cursor-default",
+        "cursor-default select-none flex items-center gap-2 px-2 py-1.5 rounded-none text-sm",
         hoverBg,
         focusBg,
+        activeBg,
         inset && "pl-8",
         className
       )}
@@ -230,6 +269,7 @@ function DropdownMenuSubContent({
       className={cn(
         baseBg,
         "border-2 border-black dark:border-white rounded-none shadow-none p-1",
+        "min-w-[8rem] overflow-hidden z-50",
         className
       )}
       {...props}
