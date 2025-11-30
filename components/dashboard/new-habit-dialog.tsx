@@ -15,7 +15,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { cn, colors } from "@/lib/utils";
+import { cn, getHabitColor, HABIT_COLORS } from "@/lib/utils";
 import { trpc } from "@/trpc/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
@@ -40,10 +40,14 @@ type NewHabitDialogProps = {
 };
 
 const NewHabitDialog = ({ isOpen, setOpen }: NewHabitDialogProps) => {
+  const utils = trpc.useUtils();
+
   const { mutate: createHabit, isPending } =
     trpc.habits.createHabits.useMutation({
       onSuccess: (newHabit) => {
+        utils.habits.fetchMyHabits.invalidate();
         toast.success("Habit created successfully!");
+        setOpen(false);
       },
       onError: (err) => console.log(err),
     });
@@ -175,14 +179,16 @@ const NewHabitDialog = ({ isOpen, setOpen }: NewHabitDialogProps) => {
                 <FormItem>
                   <FormLabel className="font-pixel text-xs">Color</FormLabel>
                   <div className="flex items-center justify-between">
-                    {colors.map((color, index) => (
+                    {HABIT_COLORS.map((color, index) => (
                       <div
                         key={index}
                         onClick={() => form.setValue("color", color)}
                         className={cn(
-                          "h-7 w-7 border-black cursor-pointer",
-                          color,
-                          field.value === color ? "border-4" : "border-2"
+                          "h-7 w-7 border-black cursor-pointer transition-transform",
+                          getHabitColor(color).bgColor,
+                          field.value === color
+                            ? "border-4 scale-110"
+                            : "border-2 scale-100"
                         )}
                       ></div>
                     ))}

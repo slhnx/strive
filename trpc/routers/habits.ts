@@ -3,6 +3,17 @@ import { createTRPCRouter, privateProcedure } from "../init";
 import { db } from "@/db";
 
 export const habitsRouter = createTRPCRouter({
+  fetchMyHabits: privateProcedure.query(async ({ ctx }) => {
+    const { id } = ctx.user;
+
+    const habits = await db.habit.findMany({
+      where: {
+        userId: id,
+      },
+    });
+
+    return habits;
+  }),
   createHabits: privateProcedure
     .input(
       z.object({

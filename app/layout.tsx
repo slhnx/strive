@@ -1,13 +1,19 @@
 import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
+import { Bricolage_Grotesque, Montserrat } from "next/font/google";
 
+import { Providers } from "@/components/providers";
 // @ts-ignore
 import "./globals.css";
-import { Header } from "@/components/Header";
-import { Providers } from "@/components/providers";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
+  subsets: ["latin"],
+  weight: ["400", "700"],
+});
+
+
+const bricolage = Bricolage_Grotesque({
+  variable: "--font-bricolage",
   subsets: ["latin"],
   weight: ["400", "700"],
 });
@@ -24,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${montserrat.variable} antialiased`}>
+      <body className={`${montserrat.variable} ${bricolage.variable} antialiased`}>
         <Providers>{children}</Providers>
       </body>
     </html>

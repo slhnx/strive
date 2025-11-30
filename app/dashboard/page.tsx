@@ -1,4 +1,5 @@
 "use client";
+import MyHabits from "@/components/dashboard/my-habits";
 import NewHabitDialog from "@/components/dashboard/new-habit-dialog";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -49,11 +50,11 @@ const DashboardPage = () => {
         </TabsList>
 
         <div className="mt-4">
-          <TabsContent value="my-habits"></TabsContent>
+          <TabsContent value="my-habits" className="border-none">
+            <MyHabits />
+          </TabsContent>
 
           <TabsContent value="statistics"></TabsContent>
-
-          <Button className="mt-4">Add Habit</Button>
         </div>
       </Tabs>
     </div>
