@@ -35,4 +35,6 @@ const enforceUser = t.middleware(({ ctx, next }) => {
   });
 });
 
+
+export const createCallerFactory = t.createCallerFactory
 export const privateProcedure = t.procedure.use(enforceUser);
