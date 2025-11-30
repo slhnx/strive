@@ -10,6 +10,7 @@ import { PropsWithChildren, useState } from "react";
 import { makeQueryClient } from "@/trpc/query-client";
 import type { AppRouter } from "@/trpc/routers/_app";
 import superjson from "superjson";
+import { Toaster } from "./ui/sonner";
 
 export const trpc = createTRPCReact<AppRouter>();
 
@@ -70,6 +71,7 @@ export const Providers = ({ children }: React.PropsWithChildren) => {
       <trpc.Provider client={trpcClient} queryClient={queryClient}>
         <QueryClientProvider client={queryClient}>
           <ThemeProvider attribute="class">{children}</ThemeProvider>
+          <Toaster />
         </QueryClientProvider>
       </trpc.Provider>
     </ClerkProvider>

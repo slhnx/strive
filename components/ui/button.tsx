@@ -4,6 +4,7 @@ import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
+import RetroSpinner from "./retro-loader";
 
 const baseBg =
   "bg-primary text-white dark:text-white dark:hover:text-white border border-black dark:border-white rounded-none";
@@ -69,10 +70,12 @@ function Button({
   variant,
   size,
   asChild = false,
+  isLoading = false,
   ...props
 }: React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean;
+    isLoading?: boolean;
   }) {
   const Comp = asChild ? Slot : "button";
 
@@ -81,7 +84,9 @@ function Button({
       data-slot="button"
       className={cn(buttonVariants({ variant, size }), className)}
       {...props}
-    />
+    >
+      {isLoading ? <RetroSpinner /> : props.children}
+    </Comp>
   );
 }
 

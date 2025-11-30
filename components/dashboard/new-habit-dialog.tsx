@@ -22,6 +22,7 @@ import { Input } from "../ui/input";
 import { useForm } from "react-hook-form";
 import { Textarea } from "../ui/textarea";
 import { trpc } from "@/trpc/react";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   name: z.string().min(2, "Please enter a valid name").max(50),
@@ -31,11 +32,13 @@ const formSchema = z.object({
 });
 
 const NewHabitDialog = () => {
-  const { mutate: createHabit } = trpc.habits.createHabits.useMutation({
-    onSuccess: (newHabit) => {
-      console.log(newHabit);
-    },
-  });
+  const { mutate: createHabit, isPending } =
+    trpc.habits.createHabits.useMutation({
+      onSuccess: (newHabit) => {
+        console.log(newHabit);
+        toast.success("Habit created successfully!");
+      },
+    });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -47,7 +50,7 @@ const NewHabitDialog = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
     const { name, frequency, goal, description } = values;
     createHabit({
       name,
@@ -55,7 +58,7 @@ const NewHabitDialog = () => {
       goal,
       description,
     });
-  }
+  };
 
   return (
     <Dialog>
@@ -127,7 +130,9 @@ const NewHabitDialog = () => {
                 </FormItem>
               )}
             />
-            <Button type="submit">Submit</Button>
+            <Button isLoading={isPending} type="submit">
+              Submit
+            </Button>
           </form>
         </Form>
       </DialogContent>
