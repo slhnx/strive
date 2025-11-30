@@ -10,10 +10,11 @@ export const habitsRouter = createTRPCRouter({
         goal: z.string(),
         frequency: z.number(),
         description: z.string().optional(),
+        color: z.string(),
       })
     )
     .mutation(async ({ input, ctx }) => {
-      const { name, frequency, goal, description } = input;
+      const { name, frequency, goal, description, color } = input;
 
       const newHabit = await db.habit.create({
         data: {
@@ -21,6 +22,7 @@ export const habitsRouter = createTRPCRouter({
           frequency,
           goal,
           description,
+          color,
           userId: ctx.user.id,
         },
       });
