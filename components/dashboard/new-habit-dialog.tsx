@@ -21,19 +21,31 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { useForm } from "react-hook-form";
 import { Textarea } from "../ui/textarea";
+import { trpc } from "@/trpc/react";
+import { toast } from "sonner";
+import React from "react";
 
 const formSchema = z.object({
   name: z.string().min(2, "Please enter a valid name").max(50),
-  description: z
-    .string()
-    .min(2, "Please enter a valid description")
-    .max(50)
-    .optional(),
+  description: z.string().max(200).optional(),
   goal: z.string().min(2, "Please enter a valid goal").max(50),
-  frequency: z.number().min(1, "Please enter a valid frequency").max(7),
+  frequency: z.number("Please enter a valid frequency").min(1).max(7),
 });
 
-const NewHabitDialog = () => {
+type NewHabitDialogProps = {
+  isOpen: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const NewHabitDialog = ({ isOpen, setOpen }: NewHabitDialogProps) => {
+  const { mutate: createHabit, isPending } =
+    trpc.habits.createHabits.useMutation({
+      onSuccess: (newHabit) => {
+        console.log(newHabit);
+        toast.success("Habit created successfully!");
+      },
+    });
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -44,17 +56,18 @@ const NewHabitDialog = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    const { name, frequency, goal, description } = values;
+    createHabit({
+      name,
+      frequency,
+      goal,
+      description,
+    });
+  };
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button>Add Habit</Button>
-      </DialogTrigger>
+    <Dialog open={isOpen} onOpenChange={setOpen}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>New Habit</DialogTitle>
@@ -69,7 +82,9 @@ const NewHabitDialog = () => {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="font-pixel text-xs">Username</FormLabel>
+                  <FormLabel className="font-pixel text-xs">
+                    Habit Name
+                  </FormLabel>
                   <FormControl>
                     <Input type="text" placeholder="Jogging" {...field} />
                   </FormControl>
@@ -118,7 +133,9 @@ const NewHabitDialog = () => {
                 </FormItem>
               )}
             />
-            <Button type="submit">Submit</Button>
+            <Button isLoading={isPending} type="submit">
+              Submit
+            </Button>
           </form>
         </Form>
       </DialogContent>
