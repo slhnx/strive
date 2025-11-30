@@ -1,9 +1,13 @@
+"use client";
 import NewHabitDialog from "@/components/dashboard/new-habit-dialog";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ChartNoAxesCombined, ChartScatter, User } from "lucide-react";
+import { useState } from "react";
 
 const DashboardPage = () => {
+  const [newHabitDialog, setNewHabitDialog] = useState(false);
+
   return (
     <div className="py-6 px-4 border-2 border-black dark:border-white mt-12 w-full">
       <Tabs defaultValue="my-habits" className="w-full">
@@ -34,7 +38,13 @@ const DashboardPage = () => {
           </div>
 
           <div className="w-full sm:w-auto flex justify-start sm:justify-end">
-            <NewHabitDialog />
+            <Button onClick={() => setNewHabitDialog(true)}>Add Habit</Button>
+            {newHabitDialog && (
+              <NewHabitDialog
+                isOpen={newHabitDialog}
+                setOpen={setNewHabitDialog}
+              />
+            )}
           </div>
         </TabsList>
 

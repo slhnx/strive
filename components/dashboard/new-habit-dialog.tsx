@@ -23,6 +23,7 @@ import { useForm } from "react-hook-form";
 import { Textarea } from "../ui/textarea";
 import { trpc } from "@/trpc/react";
 import { toast } from "sonner";
+import React from "react";
 
 const formSchema = z.object({
   name: z.string().min(2, "Please enter a valid name").max(50),
@@ -31,7 +32,12 @@ const formSchema = z.object({
   frequency: z.number("Please enter a valid frequency").min(1).max(7),
 });
 
-const NewHabitDialog = () => {
+type NewHabitDialogProps = {
+  isOpen: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const NewHabitDialog = ({ isOpen, setOpen }: NewHabitDialogProps) => {
   const { mutate: createHabit, isPending } =
     trpc.habits.createHabits.useMutation({
       onSuccess: (newHabit) => {
@@ -61,10 +67,7 @@ const NewHabitDialog = () => {
   };
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button>Add Habit</Button>
-      </DialogTrigger>
+    <Dialog open={isOpen} onOpenChange={setOpen}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>New Habit</DialogTitle>
