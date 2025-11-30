@@ -1,0 +1,30 @@
+import { z } from "zod";
+import { createTRPCRouter, privateProcedure } from "../init";
+import { db } from "@/db";
+
+export const habitsRouter = createTRPCRouter({
+  createHabits: privateProcedure
+    .input(
+      z.object({
+        name: z.string(),
+        goal: z.string(),
+        frequency: z.number(),
+        description: z.string().optional(),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      const { name, frequency, goal, description } = input;
+
+      const newHabit = await db.habit.create({
+        data: {
+          name,
+          frequency,
+          goal,
+          description,
+          userId: ctx.user.id,
+        },
+      });
+
+      return newHabit;
+    }),
+});

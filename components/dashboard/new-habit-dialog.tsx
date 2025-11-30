@@ -21,19 +21,22 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { useForm } from "react-hook-form";
 import { Textarea } from "../ui/textarea";
+import { trpc } from "@/trpc/react";
 
 const formSchema = z.object({
   name: z.string().min(2, "Please enter a valid name").max(50),
-  description: z
-    .string()
-    .min(2, "Please enter a valid description")
-    .max(50)
-    .optional(),
+  description: z.string().max(200).optional(),
   goal: z.string().min(2, "Please enter a valid goal").max(50),
-  frequency: z.number().min(1, "Please enter a valid frequency").max(7),
+  frequency: z.number("Please enter a valid frequency").min(1).max(7),
 });
 
 const NewHabitDialog = () => {
+  const { mutate: createHabit } = trpc.habits.createHabits.useMutation({
+    onSuccess: (newHabit) => {
+      console.log(newHabit);
+    },
+  });
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -45,9 +48,13 @@ const NewHabitDialog = () => {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+    const { name, frequency, goal, description } = values;
+    createHabit({
+      name,
+      frequency,
+      goal,
+      description,
+    });
   }
 
   return (
@@ -69,7 +76,9 @@ const NewHabitDialog = () => {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="font-pixel text-xs">Username</FormLabel>
+                  <FormLabel className="font-pixel text-xs">
+                    Habit Name
+                  </FormLabel>
                   <FormControl>
                     <Input type="text" placeholder="Jogging" {...field} />
                   </FormControl>

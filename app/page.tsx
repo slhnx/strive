@@ -7,7 +7,7 @@ import { TestimonialsSection } from "@/components/blocks/testimonials-section";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 
-export default function Demo() {
+export default async function LandingPage() {
   return (
     <>
       <Header />
