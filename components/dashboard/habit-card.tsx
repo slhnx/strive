@@ -1,7 +1,10 @@
+"use client";
 import { Habit } from "@/app/generated/prisma/client";
 import { cn, getHabitColor } from "@/lib/utils";
-import ProgressDots from "./progress-dots";
-import { Button } from "../ui/button";
+import { trpc } from "@/trpc/react";
+import { useEffect, useState } from "react";
+import RetroSpinner from "../ui/retro-loader";
+import HabitProgress from "./habit-progress";
 
 type HabitCardProps = {
   habit: Habit;
@@ -9,7 +12,22 @@ type HabitCardProps = {
 
 const HabitCard = ({ habit }: HabitCardProps) => {
   const habitColors = getHabitColor(habit.color);
-  const isCompleted = false; // Placeholder for completion status
+
+  const { data, isLoading } = trpc.habits.fetchCheckIns.useQuery({
+    habitId: habit.id,
+  });
+
+  const [habitCount, setHabitCount] = useState(0);
+  const [isCompleted, setCompleted] = useState(
+    data?.count === habit?.frequency
+  );
+
+  useEffect(() => {
+    if (data) {
+      setHabitCount(data.count);
+      setCompleted(data.count === habit.frequency);
+    }
+  }, [data]);
 
   return (
     <div
@@ -41,38 +59,19 @@ const HabitCard = ({ habit }: HabitCardProps) => {
         </div>
       </div>
 
-      <div className="my-4">
-        <div className="text-xs font-bold text-gray-700 mb-2 uppercase">
-          Today's Progress: 0/{habit.frequency}
+      {isLoading ? (
+        <div className="my-3">
+          <RetroSpinner />
         </div>
-        {habit.frequency > 1 ? (
-          <ProgressDots
-            current={1}
-            total={habit.frequency}
-            color={habit.color}
-          />
-        ) : (
-          <div
-            className={`h-8 border-3 border-black ${
-              isCompleted ? "bg-green-300" : "bg-gray-200"
-            } flex items-center justify-center font-bold text-black`}
-          >
-            {isCompleted ? "✓ COMPLETE" : "INCOMPLETE"}
-          </div>
-        )}
-      </div>
-
-      <div className="space-y-1">
-        <div
-          className={`h-6 border-3 border-black bg-gray-100 overflow-hidden`}
-        >
-          <div
-            className={`h-full ${habitColors.accentColor} border-r-4 border-black transition-all duration-300`}
-            style={{ width: `${30}%` }}
-          />
-        </div>
-      </div>
-      <Button className={cn("w-full mt-4 bg-yellow-300 hover:bg-yellow-500 hover:text-black text-black font-semibold")}>Log Habit</Button>
+      ) : (
+        <HabitProgress
+          habit={habit}
+          habitCount={habitCount}
+          isCompleted={isCompleted}
+          setCompleted={setCompleted}
+          setHabitCount={setHabitCount}
+        />
+      )}
     </div>
   );
 };
