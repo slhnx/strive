@@ -5,6 +5,7 @@ import { trpc } from "@/trpc/react";
 import { useEffect, useState } from "react";
 import RetroSpinner from "../ui/retro-loader";
 import HabitProgress from "./habit-progress";
+import HabitDrawer from "./habit-drawer";
 
 type HabitCardProps = {
   habit: Habit;
@@ -13,21 +14,21 @@ type HabitCardProps = {
 const HabitCard = ({ habit }: HabitCardProps) => {
   const habitColors = getHabitColor(habit.color);
 
-  const { data, isLoading } = trpc.habits.fetchCheckIns.useQuery({
+  const { data: checkIns, isLoading } = trpc.habits.fetchCheckIns.useQuery({
     habitId: habit.id,
   });
 
   const [habitCount, setHabitCount] = useState(0);
   const [isCompleted, setCompleted] = useState(
-    data?.count === habit?.frequency
+    checkIns?.count === habit?.frequency
   );
 
   useEffect(() => {
-    if (data) {
-      setHabitCount(data.count);
-      setCompleted(data.count === habit.frequency);
+    if (checkIns) {
+      setHabitCount(checkIns.count);
+      setCompleted(checkIns.count === habit.frequency);
     }
-  }, [data]);
+  }, [checkIns]);
 
   return (
     <div
@@ -42,6 +43,7 @@ const HabitCard = ({ habit }: HabitCardProps) => {
       </h3>
       <p className={cn(habitColors.textColor)}>{habit.description}</p>
 
+      <HabitDrawer habit={habit} />
       <div className="flex items-center gap-2">
         <h1
           className={cn(

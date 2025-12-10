@@ -60,7 +60,7 @@ export const habitsRouter = createTRPCRouter({
 
       let existingCheckIn = await db.checkIn.findFirst({
         where: {
-          date: format(new Date(), "dd/MM/yyyy"),
+          date: format(new Date(), "yyyy-MM-dd"),
           habitId: habitId,
           userId: ctx.user.id,
         },
@@ -69,7 +69,7 @@ export const habitsRouter = createTRPCRouter({
       if (!existingCheckIn) {
         return await db.checkIn.create({
           data: {
-            date: format(new Date(), "dd/MM/yyyy"),
+            date: format(new Date(), "yyyy-MM-dd"),
             count,
             userId: ctx.user.id,
             habitId,
@@ -95,13 +95,34 @@ export const habitsRouter = createTRPCRouter({
       })
     )
     .query(async ({ ctx, input }) => {
+      // Fetches the check-ins of a habit on a particular date
       const { habitId } = input;
 
       const checkIns = await db.checkIn.findFirst({
         where: {
           habitId,
           userId: ctx.user.id,
-          date: format(new Date(), "dd/MM/yyyy"),
+          date: format(new Date(), "yyyy-MM-dd"),
+        },
+      });
+
+      return checkIns;
+    }),
+  fetchAllCheckIns: privateProcedure
+    .input(
+      z.object({
+        habitId: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      // Fetches all check-ins of a habit
+      const { habitId } = input;
+      const { id: userId } = ctx.user;
+
+      const checkIns = await db.checkIn.findMany({
+        where: {
+          habitId,
+          userId,
         },
       });
 

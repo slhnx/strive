@@ -37,6 +37,7 @@
     "ogl": "^1.0.11",
     "pg": "^8.16.3",
     "react": "19.2.0",
+    "react-calendar-heatmap": "^1.10.0",
     "react-dom": "19.2.0",
     "react-hook-form": "^7.67.0",
     "server-only": "^0.0.1",
@@ -44,6 +45,7 @@
     "superjson": "^2.2.6",
     "svix": "^1.81.0",
     "tailwind-merge": "^3.4.0",
+    "vaul": "^1.1.2",
     "zod": "^4.1.13"
   },
   "devDependencies": {
@@ -51,6 +53,7 @@
     "@types/node": "^20",
     "@types/pg": "^8.15.6",
     "@types/react": "^19",
+    "@types/react-calendar-heatmap": "^1.9.0",
     "@types/react-dom": "^19",
     "baseline-browser-mapping": "^2.8.32",
     "eslint": "^9",

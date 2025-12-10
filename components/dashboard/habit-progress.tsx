@@ -23,6 +23,8 @@ const HabitProgress = ({
 }: HabitProgressProps) => {
   const habitColors = getHabitColor(habit.color);
 
+  const utils = trpc.useUtils();
+
   const { mutate: checkInHabit } = trpc.habits.checkInHabit.useMutation({
     onMutate: () => {
       setHabitCount(habitCount + 1);
@@ -32,6 +34,9 @@ const HabitProgress = ({
         Math.random() * CHECKIN_MESSAGES.length
       );
       toast.success(CHECKIN_MESSAGES[randomMessageIndex]);
+    },
+    onSuccess: () => {
+      utils.habits.fetchAllCheckIns.invalidate({ habitId: habit.id });
     },
   });
 
