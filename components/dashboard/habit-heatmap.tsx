@@ -1,9 +1,9 @@
 "use client";
 
 import { Habit } from "@/app/generated/prisma/client";
-import { cn, getHabitColor } from "@/lib/utils";
+import { cn, getHabitColor, getHabitProgressColor } from "@/lib/utils";
 import { trpc } from "@/trpc/react";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useRef, useEffect } from "react";
 
 export type HeatmapValue = { date: string; count: number };
 
@@ -12,6 +12,12 @@ type HabitHeatmapProps = {
   cellSize?: number;
   gap?: number;
   startDate?: string;
+  /**
+   * width of the outer container (where scrolling happens).
+   * Accepts CSS width values like '280px', '22rem', '100%'.
+   * Default is a small width so it looks "narrow".
+   */
+  containerWidth?: string | number;
 };
 
 export default function HabitHeatmap({
@@ -19,6 +25,7 @@ export default function HabitHeatmap({
   cellSize = 12,
   gap = 8,
   startDate,
+  containerWidth = 280,
 }: HabitHeatmapProps) {
   const { data: checkIns, isLoading } = trpc.habits.fetchAllCheckIns.useQuery({
     habitId: habit.id,
@@ -38,7 +45,6 @@ export default function HabitHeatmap({
   const days = useMemo(() => {
     const result: { date: string; count: number; dt: Date }[] = [];
     const base = startDate ? new Date(startDate) : new Date();
-    // if startDate provided assume it's the *end* date, keep 365 days ending at startDate
     for (let i = 364; i >= 0; i--) {
       const d = new Date(base);
       d.setDate(base.getDate() - i);
@@ -58,23 +64,26 @@ export default function HabitHeatmap({
     return color.progress.seven;
   };
 
-  console.log(days);
+  // compute number of columns (weeks)
+  const columns = useMemo(() => Math.ceil(days.length / 7), [days.length]);
 
   // prepare month labels: place label at left position of first day of month in grid
+  const cellTotal = cellSize + gap;
   const monthPositions = useMemo(() => {
-    // grid is 7 rows, flow by column: each column is a week starting Sunday (or not exactly)
-    // Our days array flows left-to-right by day; grid-flow-col with 7 rows means days[0] is top-left
-    // Calculate column index for each day: Math.floor(index / 7)
     const map = new Map<string, number>();
-
     days.forEach((d, idx) => {
       const monthKey = d.dt.toLocaleString("en-US", { month: "short" });
       const col = Math.floor(idx / 7);
-      if (!map.has(monthKey)) map.set(monthKey, col);
+      if (!map.has(`${monthKey}-${d.dt.getFullYear()}`)) {
+        map.set(`${monthKey}-${d.dt.getFullYear()}`, col);
+      }
     });
 
     const arr: { month: string; col: number }[] = [];
-    map.forEach((col, month) => arr.push({ month, col }));
+    map.forEach((col, monthYear) => {
+      const [month] = monthYear.split("-");
+      arr.push({ month, col });
+    });
     return arr;
   }, [days]);
 
@@ -84,12 +93,38 @@ export default function HabitHeatmap({
     text: string;
   } | null>(null);
 
-  // visualization sizes for absolute positioning of month labels
-  const cellTotal = cellSize + gap;
+  // scroll container ref (the element with overflow-x)
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+
+  // ensure the grid has explicit pixel width to allow smooth scrolling
+  const gridWidthPx = columns * cellTotal;
+
+  // auto-scroll to right when days change (or on mount)
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    // wait for layout; using rAF twice is a common pattern to ensure content measured
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const scrollTo = el.scrollWidth - el.clientWidth;
+        // guard against negative
+        if (scrollTo > 0) el.scrollTo({ left: scrollTo, behavior: "auto" });
+      });
+    });
+  }, [gridWidthPx, days.length, cellSize, gap]);
 
   return (
-    <div className="w-full">
-      <div className="relative overflow-x-auto pb-6">
+    <div
+      className="overflow-hidden"
+      style={{
+        width:
+          typeof containerWidth === "number"
+            ? `${containerWidth}px`
+            : containerWidth,
+      }}
+    >
+      <div className="relative overflow-x-auto pb-6" ref={scrollRef}>
         {/* month labels positioned above the grid */}
         <div className="relative h-6">
           {monthPositions.map((m) => {
@@ -109,7 +144,14 @@ export default function HabitHeatmap({
         {/* grid */}
         <div
           className="grid grid-flow-col grid-rows-7"
-          style={{ gap }}
+          style={{
+            gap,
+            // set explicit width so the overflow container can measure scrollWidth correctly
+            width: gridWidthPx,
+            // optional: ensure items don't stretch unexpectedly
+            gridAutoColumns: `${cellSize}px`,
+            gridTemplateRows: `repeat(7, ${cellSize}px)`,
+          }}
           aria-hidden={false}
         >
           {days.map((d, idx) => (
@@ -135,9 +177,10 @@ export default function HabitHeatmap({
                 });
               }}
               onBlur={() => setHover(null)}
-              className={`w-[${cellSize}px] h-[${cellSize}px] ${getColorClass(
-                d.count
-              )} border border-transparent cursor-default`}
+              className={cn(
+                `border border-transparent cursor-default`,
+                getHabitProgressColor(d.count, habit.frequency, habit.color)
+              )}
               title={`${d.date} — ${d.count} completions`}
               style={{ width: cellSize, height: cellSize }}
             />

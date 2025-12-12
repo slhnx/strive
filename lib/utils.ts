@@ -23,10 +23,12 @@ export function getHabitColor(color: string) {
       textColor: "text-red-900",
       borderColor: "border-red-900",
       accentColor: "bg-red-500",
+      buttonColor: "bg-red-500",
+      buttonHoverColor: "hover:bg-red-600",
       progress: {
         one: "bg-red-100",
-        three: "bg-red-300",
-        five: "bg-red-500",
+        three: "bg-red-300/70",
+        five: "bg-red-500/70",
         seven: "bg-red-700",
       },
     },
@@ -35,6 +37,8 @@ export function getHabitColor(color: string) {
       textColor: "text-blue-900",
       borderColor: "border-blue-900",
       accentColor: "bg-blue-500",
+      buttonColor: "bg-blue-500",
+      buttonHoverColor: "hover:bg-blue-600",
       progress: {
         one: "bg-blue-100",
         three: "bg-blue-300",
@@ -47,6 +51,8 @@ export function getHabitColor(color: string) {
       textColor: "text-green-900",
       borderColor: "border-green-900",
       accentColor: "bg-green-500",
+      buttonColor: "bg-green-500",
+      buttonHoverColor: "hover:bg-green-600",
       progress: {
         one: "bg-green-100",
         three: "bg-green-300",
@@ -59,6 +65,8 @@ export function getHabitColor(color: string) {
       textColor: "text-yellow-900",
       borderColor: "border-yellow-900",
       accentColor: "bg-yellow-400",
+      buttonColor: "bg-yellow-500",
+      buttonHoverColor: "hover:bg-yellow-600",
       progress: {
         one: "bg-yellow-100",
         three: "bg-yellow-300",
@@ -71,6 +79,8 @@ export function getHabitColor(color: string) {
       textColor: "text-purple-900",
       borderColor: "border-purple-900",
       accentColor: "bg-purple-500",
+      buttonColor: "bg-purple-500",
+      buttonHoverColor: "hover:bg-purple-600",
       progress: {
         one: "bg-purple-100",
         three: "bg-purple-300",
@@ -83,11 +93,13 @@ export function getHabitColor(color: string) {
       textColor: "text-pink-900",
       borderColor: "border-pink-900",
       accentColor: "bg-pink-500",
+      buttonColor: "bg-pink-500",
+      buttonHoverColor: "hover:bg-pink-600",
       progress: {
         one: "bg-pink-100",
         three: "bg-pink-300",
         five: "bg-pink-500",
-        seven: 'bg-pink-700',
+        seven: "bg-pink-700",
       },
     },
     cyan: {
@@ -95,6 +107,8 @@ export function getHabitColor(color: string) {
       textColor: "text-cyan-900",
       borderColor: "border-cyan-900",
       accentColor: "bg-cyan-400",
+      buttonColor: "bg-cyan-400",
+      buttonHoverColor: "hover:bg-cyan-600",
       progress: {
         one: "bg-cyan-100",
         three: "bg-cyan-300",
@@ -107,6 +121,8 @@ export function getHabitColor(color: string) {
       textColor: "text-orange-900",
       borderColor: "border-orange-900",
       accentColor: "bg-orange-500",
+      buttonColor: "bg-orange-500",
+      buttonHoverColor: "hover:bg-orange-600",
       progress: {
         one: "bg-orange-100",
         three: "bg-orange-300",
@@ -118,3 +134,17 @@ export function getHabitColor(color: string) {
 
   return colorMap[color as keyof typeof colorMap] || colorMap.blue;
 }
+
+export const getHabitProgressColor = (
+  count: number,
+  habitFrequency: number,
+  habitColor: string
+) => {
+  const color = getHabitColor(habitColor);
+  if (count === 0) return "bg-gray-200";
+  const ratio = count / habitFrequency;
+  if (ratio < 0.25) return color.progress.one;
+  if (ratio < 0.5) return color.progress.three;
+  if (ratio < 0.75) return color.progress.five;
+  return color.progress.seven;
+};

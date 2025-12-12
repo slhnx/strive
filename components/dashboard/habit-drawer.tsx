@@ -8,15 +8,21 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import HabitHeatmap from "./habit-heatmap";
+import { Cog } from "lucide-react";
+import { cn, getHabitColor } from "@/lib/utils";
 
 type HabitDrawerProps = {
   habit: Habit;
 };
 
 const HabitDrawer = ({ habit }: HabitDrawerProps) => {
+  const habitColor = getHabitColor(habit.color);
+
   return (
     <Drawer>
-      <DrawerTrigger>Open</DrawerTrigger>
+      <DrawerTrigger className={cn("p-2 rounded-sm active:scale-90 transition-transform", habitColor.bgColor)}>
+        <Cog className={habitColor.textColor} />
+      </DrawerTrigger>
       <DrawerContent className="w-1/2 mx-auto">
         <DrawerHeader>
           <DrawerTitle className="text-left">{habit.name}</DrawerTitle>

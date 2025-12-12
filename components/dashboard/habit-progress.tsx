@@ -1,44 +1,24 @@
 import { Habit } from "@/app/generated/prisma/client";
+import { getHabitColor } from "@/lib/utils";
+import { useMemo } from "react";
 import ProgressDots from "./progress-dots";
-import { cn, getHabitColor } from "@/lib/utils";
-import { trpc } from "@/trpc/react";
-import { CHECKIN_MESSAGES } from "@/constants";
-import { toast } from "sonner";
-import { Button } from "../ui/button";
 
 type HabitProgressProps = {
   habitCount: number;
-  setHabitCount: React.Dispatch<React.SetStateAction<number>>;
   habit: Habit;
   isCompleted: boolean;
-  setCompleted: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const HabitProgress = ({
   habit,
   habitCount,
-  setHabitCount,
   isCompleted,
-  setCompleted,
 }: HabitProgressProps) => {
+  const completionRatio = useMemo(() => {
+    return habitCount / habit.frequency;
+  }, [habitCount]);
+
   const habitColors = getHabitColor(habit.color);
-
-  const utils = trpc.useUtils();
-
-  const { mutate: checkInHabit } = trpc.habits.checkInHabit.useMutation({
-    onMutate: () => {
-      setHabitCount(habitCount + 1);
-      setCompleted(habitCount + 1 === habit.frequency);
-
-      const randomMessageIndex = Math.floor(
-        Math.random() * CHECKIN_MESSAGES.length
-      );
-      toast.success(CHECKIN_MESSAGES[randomMessageIndex]);
-    },
-    onSuccess: () => {
-      utils.habits.fetchAllCheckIns.invalidate({ habitId: habit.id });
-    },
-  });
 
   return (
     <div className="habit-progress">
@@ -72,21 +52,6 @@ const HabitProgress = ({
           />
         </div>
       </div>
-      <Button
-        disabled={isCompleted}
-        onClick={() =>
-          checkInHabit({
-            habitId: habit.id,
-            date: new Date(),
-            count: habitCount + 1,
-          })
-        }
-        className={cn(
-          "w-full mt-4 bg-yellow-300 hover:bg-yellow-500 hover:text-black text-black font-semibold"
-        )}
-      >
-        Log Habit
-      </Button>
     </div>
   );
 };
