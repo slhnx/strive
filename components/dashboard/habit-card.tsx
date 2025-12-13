@@ -11,6 +11,7 @@ import { Button } from "../ui/button";
 import { CHECKIN_MESSAGES } from "@/constants";
 import { toast } from "sonner";
 import { CheckIcon, PlusIcon } from "lucide-react";
+import EditHabitSheet from "./edit-habit-sheet";
 
 type HabitCardProps = {
   habit: Habit;
@@ -113,7 +114,7 @@ const HabitCard = ({ habit }: HabitCardProps) => {
             🔥 {5}
           </div>
         </div>
-        <HabitDrawer habit={habit} />
+        <EditHabitSheet habit={habit} />
       </div>
     </div>
   );
