@@ -128,4 +128,32 @@ export const habitsRouter = createTRPCRouter({
 
       return checkIns;
     }),
+  updateHabit: privateProcedure
+    .input(
+      z.object({
+        habitId: z.string(),
+        name: z.string(),
+        goal: z.string(),
+        frequency: z.number(),
+        description: z.string().optional(),
+        color: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { color, frequency, goal, habitId, name, description } = input;
+
+      return await db.habit.update({
+        where: {
+          id: habitId,
+          userId: ctx.user.id,
+        },
+        data: {
+          color,
+          frequency,
+          goal,
+          name,
+          description,
+        },
+      });
+    }),
 });
