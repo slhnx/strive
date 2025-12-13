@@ -9,7 +9,7 @@ const MyHabits = () => {
   return (
     <div>
       {isLoading && <RetroSpinner />}
-      <div className="grid grid-cols-3 gap-6">
+      <div className="grid grid-cols-3 gap-6 bg-secondary">
         {data &&
           data.map((habit) => <HabitCard key={habit.id} habit={habit} />)}
       </div>

@@ -54,8 +54,7 @@ const HabitCard = ({ habit }: HabitCardProps) => {
   return (
     <div
       className={cn(
-        "border-3 px-8 py-6 retro-shadow",
-
+        "border-3 px-8 py-6 retro-shadow bg-white",
         habitColors.borderColor
       )}
     >
