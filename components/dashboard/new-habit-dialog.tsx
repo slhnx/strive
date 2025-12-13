@@ -5,31 +5,33 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { cn, getHabitColor, HABIT_COLORS } from "@/lib/utils";
+import { trpc } from "@/trpc/react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { useForm } from "react-hook-form";
 import { Textarea } from "../ui/textarea";
-import { trpc } from "@/trpc/react";
-import { toast } from "sonner";
-import React from "react";
 
 const formSchema = z.object({
   name: z.string().min(2, "Please enter a valid name").max(50),
   description: z.string().max(200).optional(),
   goal: z.string().min(2, "Please enter a valid goal").max(50),
   frequency: z.number("Please enter a valid frequency").min(1).max(7),
+  color: z.string("Please select a color"),
 });
 
 type NewHabitDialogProps = {
@@ -38,12 +40,16 @@ type NewHabitDialogProps = {
 };
 
 const NewHabitDialog = ({ isOpen, setOpen }: NewHabitDialogProps) => {
+  const utils = trpc.useUtils();
+
   const { mutate: createHabit, isPending } =
     trpc.habits.createHabits.useMutation({
       onSuccess: (newHabit) => {
-        console.log(newHabit);
+        utils.habits.fetchMyHabits.invalidate();
         toast.success("Habit created successfully!");
+        setOpen(false);
       },
+      onError: (err) => console.log(err),
     });
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -57,13 +63,24 @@ const NewHabitDialog = ({ isOpen, setOpen }: NewHabitDialogProps) => {
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    const { name, frequency, goal, description } = values;
+    const { name, frequency, goal, description, color } = values;
     createHabit({
       name,
       frequency,
       goal,
       description,
+      color,
     });
+  };
+
+  const updateFrequency = (offset: number) => {
+    const oldFrequency = form.getValues("frequency");
+
+    if (offset > 0) {
+      form.setValue("frequency", oldFrequency + 1);
+    } else {
+      form.setValue("frequency", oldFrequency - 1 < 1 ? 1 : oldFrequency - 1);
+    }
   };
 
   return (
@@ -94,19 +111,6 @@ const NewHabitDialog = ({ isOpen, setOpen }: NewHabitDialogProps) => {
             />
             <FormField
               control={form.control}
-              name="frequency"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="font-pixel text-xs">Freuency</FormLabel>
-                  <FormControl>
-                    <Input type="number" placeholder="Frequency" {...field} />
-                  </FormControl>
-                  <FormMessage className="font-pixel text-xs" />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
               name="goal"
               render={({ field }) => (
                 <FormItem>
@@ -129,6 +133,66 @@ const NewHabitDialog = ({ isOpen, setOpen }: NewHabitDialogProps) => {
                   <FormControl>
                     <Textarea placeholder="abba jabba dabba" {...field} />
                   </FormControl>
+                  <FormMessage className="font-pixel text-xs" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="frequency"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="font-pixel text-xs">Freuency</FormLabel>
+                  <FormDescription>No of times a day.</FormDescription>
+                  <div className="flex items-center justify-between">
+                    <Button
+                      type="button"
+                      onClick={() => updateFrequency(-1)}
+                      size="icon"
+                      disabled={field.value === 1}
+                    >
+                      -
+                    </Button>
+                    <FormControl className="flex items-center justify-between">
+                      <Input
+                        type="number"
+                        className="w-12 no-spinner"
+                        {...field}
+                      />
+                    </FormControl>
+                    <Button
+                      type="button"
+                      onClick={() => updateFrequency(1)}
+                      size="icon"
+                    >
+                      +
+                    </Button>
+                  </div>
+                  <FormMessage className="font-pixel text-xs" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="color"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="font-pixel text-xs">Color</FormLabel>
+                  <div className="flex items-center justify-between">
+                    {HABIT_COLORS.map((color, index) => (
+                      <div
+                        key={index}
+                        onClick={() => form.setValue("color", color)}
+                        className={cn(
+                          "h-7 w-7 border-black cursor-pointer transition-transform",
+                          getHabitColor(color).bgColor,
+                          field.value === color
+                            ? "border-4 scale-110"
+                            : "border-2 scale-100"
+                        )}
+                      ></div>
+                    ))}
+                  </div>
                   <FormMessage className="font-pixel text-xs" />
                 </FormItem>
               )}

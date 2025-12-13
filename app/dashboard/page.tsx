@@ -1,4 +1,5 @@
 "use client";
+import MyHabits from "@/components/dashboard/my-habits";
 import NewHabitDialog from "@/components/dashboard/new-habit-dialog";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -9,12 +10,12 @@ const DashboardPage = () => {
   const [newHabitDialog, setNewHabitDialog] = useState(false);
 
   return (
-    <div className="py-6 px-4 border-2 border-black dark:border-white mt-12 w-full">
+    <div className="py-6 px-4 border-2 border-black dark:border-white mt-12 w-full bg-secondary rounded-md">
       <Tabs defaultValue="my-habits" className="w-full">
         <TabsList
           className="
             w-full 
-            border-none border-b border-black dark:border-white 
+            border-none border-b border-black dark:border-white bg-secondary 
             py-3 
             flex flex-wrap items-center gap-3
             justify-between 
@@ -49,11 +50,11 @@ const DashboardPage = () => {
         </TabsList>
 
         <div className="mt-4">
-          <TabsContent value="my-habits"></TabsContent>
+          <TabsContent value="my-habits" className="border-none bg-secondary">
+            <MyHabits />
+          </TabsContent>
 
           <TabsContent value="statistics"></TabsContent>
-
-          <Button className="mt-4">Add Habit</Button>
         </div>
       </Tabs>
     </div>
