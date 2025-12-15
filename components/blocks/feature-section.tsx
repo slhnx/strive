@@ -1,96 +1,107 @@
-"use client";
-import { motion } from "framer-motion";
-import { Trophy, Target, TrendingUp, Zap, Award, Calendar } from "lucide-react";
+import {
+  Flame,
+  Calendar,
+  BarChart3,
+  Trophy,
+  Target,
+  Clock,
+} from "lucide-react";
 
 const features = [
   {
-    icon: Trophy,
-    title: "Gamified Progress",
+    icon: Flame,
+    title: "STREAK TRACKING",
     description:
-      "Turn habits into quests. Earn XP, level up, and unlock achievements as you build consistency.",
-    color: "bg-cyan-500",
-  },
-  {
-    icon: Target,
-    title: "Smart Goals",
-    description:
-      "Set realistic targets and track them effortlessly. Our system adapts to your pace and lifestyle.",
-    color: "bg-pink-500",
-  },
-  {
-    icon: TrendingUp,
-    title: "Visual Analytics",
-    description:
-      "See your growth with beautiful charts and stats. Watch your streaks climb and celebrate wins.",
-    color: "bg-green-500",
-  },
-  {
-    icon: Zap,
-    title: "Quick Check-ins",
-    description:
-      "Log habits in seconds. No friction, no complexity—just tap and go about your day.",
-    color: "bg-yellow-500",
-  },
-  {
-    icon: Award,
-    title: "Milestone Rewards",
-    description:
-      "Unlock special badges and rewards as you hit major milestones. Stay motivated with tangible wins.",
-    color: "bg-red-500",
+      "Don't break the chain. Every day counts. Miss once and watch your progress burn.",
+    color: "bg-brutal-red",
   },
   {
     icon: Calendar,
-    title: "Streak Protection",
+    title: "HEATMAP CALENDAR",
     description:
-      "Life happens. Get streak shields to protect your progress on tough days without losing momentum.",
-    color: "bg-purple-500",
+      "Visual proof of your consistency—or lack thereof. Green good. Empty bad.",
+    color: "bg-accent",
+  },
+  {
+    icon: BarChart3,
+    title: "ZERO-FLUFF ANALYTICS",
+    description:
+      "No vanity metrics. Just cold, hard data about your actual performance.",
+    color: "bg-primary",
+  },
+  {
+    icon: Trophy,
+    title: "GAMIFIED CONSISTENCY",
+    description:
+      "XP, levels, badges—earn them through actual work. No participation trophies.",
+    color: "bg-brutal-yellow",
+  },
+  {
+    icon: Target,
+    title: "GOAL SETTING",
+    description:
+      "Set targets. Hit them. Or don't. The app will remind you of your failures.",
+    color: "bg-secondary",
+  },
+  {
+    icon: Clock,
+    title: "TIME BLOCKING",
+    description:
+      "Schedule your habits. Get reminded. Show up. It's not complicated.",
+    color: "bg-brutal-peach",
   },
 ];
 
-export const FeaturesSection = () => {
+const FeaturesSection = () => {
   return (
-    <section className="py-16 sm:py-24 relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-96 h-96 bg-secondary/20 rounded-full blur-3xl" />
-      <div className="container mx-auto px-4 sm:px-6 relative">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12 sm:mb-16"
-        >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black mb-4">
-            Everything You Need to
-            <span className="text-primary"> Win the Day</span>
+    <section className="py-24 bg-brutal-mint">
+      <div className="container mx-auto px-4">
+        {/* Section header */}
+        <div className="text-center mb-16">
+          <div className="inline-block bg-foreground text-background px-6 py-3 border-4 border-foreground mb-6 font-mono text-sm font-bold">
+            FEATURES THAT ACTUALLY WORK
+          </div>
+          <h2 className="font-display text-5xl md:text-7xl">
+            TOOLS FOR THE
+            <br />
+            DISCIPLINED
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Packed with features designed to keep you motivated and on track.
-          </p>
-        </motion.div>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {features.map((feature, index) => (
-            <motion.div
-              key={feature.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group"
+        {/* Features grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          {features.map((feature, i) => (
+            <div
+              key={i}
+              className="bg-background border-4 border-foreground shadow-brutal-lg p-8 hover:translate-x-[-4px] hover:translate-y-[-4px] transition-transform duration-100 group"
             >
-              <div className="bg-card border-4 border-foreground shadow-neo hover:shadow-neo-lg transition-all p-6 h-full hover-lift">
-                <div
-                  className={`${feature.color} w-14 h-14 rounded-lg border-4 border-foreground shadow-neo-sm flex items-center justify-center mb-4`}
-                >
-                  <feature.icon className="w-7 h-7 text-foreground" />
-                </div>
-                <h3 className="text-xl font-black mb-2">{feature.title}</h3>
-                <p className="text-muted-foreground">{feature.description}</p>
+              <div
+                className={`w-16 h-16 ${feature.color} border-4 border-foreground shadow-brutal flex items-center justify-center mb-6 group-hover:rotate-6 transition-transform`}
+              >
+                <feature.icon className="w-8 h-8" strokeWidth={2.5} />
               </div>
-            </motion.div>
+              <h3 className="font-display text-2xl mb-4">{feature.title}</h3>
+              <p className="font-mono text-sm leading-relaxed text-muted-foreground">
+                {feature.description}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* Bottom decoration */}
+        <div className="mt-16 flex justify-center gap-4">
+          {[...Array(5)].map((_, i) => (
+            <div
+              key={i}
+              className={`w-8 h-8 border-4 border-foreground shadow-brutal ${
+                i < 3 ? "bg-accent" : "bg-background"
+              }`}
+            />
           ))}
         </div>
       </div>
     </section>
   );
 };
+
+export default FeaturesSection;
