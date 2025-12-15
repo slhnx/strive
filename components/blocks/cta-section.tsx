@@ -1,20 +1,23 @@
 import { Button } from "@/components/ui/button";
 import { Zap } from "lucide-react";
+import { GridScan } from "../shareable/grid-scan";
 
 const CTASection = () => {
   return (
     <section className="py-24 bg-foreground text-background relative overflow-hidden">
       {/* Decorative grid */}
-      <div className="absolute inset-0 opacity-10">
-        <div
-          className="w-full h-full"
-          style={{
-            backgroundImage: `
-            linear-gradient(hsl(var(--background)) 1px, transparent 1px),
-            linear-gradient(90deg, hsl(var(--background)) 1px, transparent 1px)
-          `,
-            backgroundSize: "40px 40px",
-          }}
+      <div className="absolute inset-0 opacity-70">
+        <GridScan
+          sensitivity={0.55}
+          lineThickness={1}
+          linesColor="#333"
+          gridScale={0.1}
+          scanColor="#dddd3c"
+          scanOpacity={0.4}
+          enablePost
+          bloomIntensity={0.6}
+          chromaticAberration={0.002}
+          noiseIntensity={0.01}
         />
       </div>
 
