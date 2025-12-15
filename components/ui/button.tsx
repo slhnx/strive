@@ -7,10 +7,10 @@ import { cn } from "@/lib/utils";
 import RetroSpinner from "./retro-loader";
 
 const baseBg =
-  "bg-primary text-white dark:text-white dark:hover:text-white border border-black dark:border-white rounded-none";
+  "bg-primary text-black dark:text-white dark:hover:text-white border border-black dark:border-white rounded-none";
 
 // Primary highlight (hover/focus/active)
-const primaryHover = "hover:bg-primary hover:text-white dark:hover:bg-primary";
+const primaryHover = "hover:bg-primary hover:text-black dark:hover:bg-primary";
 
 const activeBg =
   "data-[state=active]:bg-primary data-[state=active]:text-white dark:data-[state=active]:text-black";

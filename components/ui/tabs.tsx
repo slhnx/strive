@@ -9,12 +9,12 @@ import { cn } from "@/lib/utils";
 const baseBg = "bg-white text-black dark:bg-black dark:text-white";
 
 // Hover/Focus uses primary always
-const hoverBg = "hover:bg-primary hover:text-white dark:hover:bg-primary dark:hover:text-white";
-const focusBg = "focus:bg-primary focus:text-white dark:focus:bg-primary dark:focus:text-black";
+const hoverBg = "hover:bg-primary hover:text-black dark:hover:bg-primary dark:hover:text-white";
+const focusBg = "focus:bg-primary focus:text-black dark:focus:bg-primary dark:focus:text-black";
 
 // Active state uses primary always
 const activeBg =
-  "data-[state=active]:bg-primary data-[state=active]:text-white dark:data-[state=active]:text-white";
+  "data-[state=active]:bg-primary data-[state=active]:text-black dark:data-[state=active]:text-white";
 
 function Tabs({
   className,
