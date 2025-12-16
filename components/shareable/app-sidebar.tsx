@@ -9,7 +9,15 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { ChartNoAxesCombined, ChevronUp, Cog, Home, User } from "lucide-react";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import { currentUser } from "@clerk/nextjs/server";
+import { SignOutButton, UserButton, UserProfile } from "@clerk/nextjs";
+import Image from "next/image";
 
 const items = [
   {
@@ -34,7 +42,9 @@ const items = [
   },
 ];
 
-const AppSidebar = () => {
+const AppSidebar = async () => {
+  const user = await currentUser();
+
   return (
     <Sidebar>
       <SidebarHeader>
@@ -59,8 +69,15 @@ const AppSidebar = () => {
           <SidebarMenuItem>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <SidebarMenuButton>
-                  <User /> Username
+                <SidebarMenuButton className="p-3">
+                  <Image
+                    src={user?.imageUrl as string}
+                    alt="User profile"
+                    width={20}
+                    height={20}
+                    className="rounded-full"
+                  />
+                  {user?.username}
                   <ChevronUp className="ml-auto" />
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
@@ -74,9 +91,11 @@ const AppSidebar = () => {
                 <DropdownMenuItem>
                   <span>Billing</span>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <span>Sign out</span>
-                </DropdownMenuItem>
+                <SignOutButton>
+                  <DropdownMenuItem asChild className="cursor-pointer">
+                    <span>Sign out</span>
+                  </DropdownMenuItem>
+                </SignOutButton>
               </DropdownMenuContent>
             </DropdownMenu>
           </SidebarMenuItem>
