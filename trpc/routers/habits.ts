@@ -2,6 +2,7 @@ import { z } from "zod";
 import { createTRPCRouter, privateProcedure } from "../init";
 import { db } from "@/db";
 import { format } from "date-fns";
+import { getDescendingDateStreak } from "@/lib/utils";
 
 export const habitsRouter = createTRPCRouter({
   fetchMyHabits: privateProcedure.query(async ({ ctx }) => {
@@ -155,5 +156,32 @@ export const habitsRouter = createTRPCRouter({
           description,
         },
       });
+    }),
+  getHabitStreak: privateProcedure
+    .input(
+      z.object({
+        habitId: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const { habitId } = input;
+      const { id } = ctx.user;
+
+      const checkIns = await db.checkIn.findMany({
+        where: {
+          habitId,
+          userId: id,
+        },
+      });
+
+      const sortedCheckins = checkIns
+        .sort((a, b) => b.date.localeCompare(a.date))
+        .map((checkIn) => checkIn.date);
+
+      const streak = getDescendingDateStreak(sortedCheckins);
+      console.log(sortedCheckins);
+      console.log("streak: ", streak);
+
+      return streak;
     }),
 });

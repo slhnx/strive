@@ -148,3 +148,29 @@ export const getHabitProgressColor = (
   if (ratio < 0.75) return color.progress.five;
   return color.progress.seven;
 };
+
+export const getDescendingDateStreak = (dates: string[]): number => {
+  if (dates.length === 0) return 0;
+
+  let streak = 1;
+
+  for (let i = 1; i < dates.length; i++) {
+    const prev = new Date(dates[i - 1]);
+    const curr = new Date(dates[i]);
+
+    // Normalize to UTC midnight to avoid timezone bugs
+    prev.setUTCHours(0, 0, 0, 0);
+    curr.setUTCHours(0, 0, 0, 0);
+
+    const diffInDays =
+      (prev.getTime() - curr.getTime()) / (1000 * 60 * 60 * 24);
+
+    if (diffInDays === 1) {
+      streak++;
+    } else {
+      break;
+    }
+  }
+
+  return streak;
+};

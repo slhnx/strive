@@ -21,7 +21,11 @@ const HabitCard = ({ habit }: HabitCardProps) => {
   const habitColors = getHabitColor(habit.color);
   const utils = trpc.useUtils();
 
-  const { data: checkIns, isLoading } = trpc.habits.fetchCheckIns.useQuery({
+  const { data: checkIns } = trpc.habits.fetchCheckIns.useQuery({
+    habitId: habit.id,
+  });
+
+  const { data: streak } = trpc.habits.getHabitStreak.useQuery({
     habitId: habit.id,
   });
 
@@ -110,9 +114,9 @@ const HabitCard = ({ habit }: HabitCardProps) => {
             {habit.frequency}X/Day
           </h1>
           <div
-            className={`inline-block px-2 py-2 border-2 border-orange-600 bg-orange-300 font-bold text-xs text-black`}
+            className={cn('inline-block px-2 py-2 border-2 text-xs text-black', habitColors.bgColor, habitColors.borderColor)}
           >
-            🔥 {5}
+            Streak: 🔥 {streak}
           </div>
         </div>
         <EditHabitSheet habit={habit} />
