@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import RetroSpinner from "./retro-loader";
 
 const baseBg =
-  "bg-primary text-black dark:text-white dark:hover:text-white border border-black dark:border-white rounded-none";
+  "bg-primary text-black dark:text-white dark:hover:text-white border border-black dark:border-white";
 
 // Primary highlight (hover/focus/active)
 const primaryHover = "hover:bg-primary hover:text-black dark:hover:bg-primary";
@@ -46,7 +46,7 @@ const buttonVariants = cva(
         secondary:
           "bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white hover:bg-primary hover:text-white dark:hover:bg-primary dark:hover:text-black",
         ghost:
-          "bg-transparent border-none hover:bg-primary hover:text-white dark:hover:bg-primary dark:hover:text-black shadow-none active:shadow-none active:translate-x-0 active:translate-y-0",
+          "bg-transparent border-none hover:bg-primary hover:text-black dark:hover:bg-primary dark:hover:text-black shadow-none active:shadow-none active:translate-x-0 active:translate-y-0",
         link: "bg-transparent text-primary underline-offset-4 hover:underline border-none p-0 h-auto shadow-none active:shadow-none active:translate-x-0 active:translate-y-0",
       },
       size: {

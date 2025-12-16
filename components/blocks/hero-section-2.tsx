@@ -1,7 +1,12 @@
 import { Button } from "@/components/ui/button";
+import { useUser } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs/server";
 import { Zap, ArrowRight, Sparkles } from "lucide-react";
+import Link from "next/link";
 
-const HeroSection = () => {
+const HeroSection = async () => {
+  const user = await currentUser();
+
   return (
     <section className="min-h-screen bg-background relative overflow-hidden">
       {/* Soft decorative shapes */}
@@ -25,15 +30,17 @@ const HeroSection = () => {
             </span>
           </div>
           <div className="hidden md:flex items-center gap-4">
-            <Button variant="ghost" size="sm">
+          <Button variant="ghost" size="sm">
               Features
             </Button>
             <Button variant="ghost" size="sm">
               Pricing
             </Button>
-            <Button variant="outline" size="sm">
-              Log In
-            </Button>
+            {!user && (
+              <Button variant="outline" size="sm">
+                Log In
+              </Button>
+            )}
           </div>
         </nav>
 
@@ -75,10 +82,21 @@ const HeroSection = () => {
 
           {/* CTA buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
-            <Button className="group">
-              Start Tracking Free
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Button>
+            {!user ? (
+              <Link href="/sign-in">
+                <Button className="group">
+                  Start Tracking Free
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
+            ) : (
+              <Link href="/dashboard">
+                <Button className="group">
+                  Dashboard
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
+            )}
             <Button variant="outline" size="lg">
               See How It Works
             </Button>
