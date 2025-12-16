@@ -10,12 +10,12 @@ const DashboardPage = () => {
   const [newHabitDialog, setNewHabitDialog] = useState(false);
 
   return (
-    <div className="py-6 px-4 border-2 border-black dark:border-white mt-12 w-full bg-secondary rounded-md">
+    <div className="w-full">
       <Tabs defaultValue="my-habits" className="w-full">
         <TabsList
           className="
             w-full 
-            border-none border-b border-black dark:border-white bg-secondary 
+            border-none border-b border-black dark:border-white bg-transparent
             py-3 
             flex flex-wrap items-center gap-3
             justify-between 
@@ -50,7 +50,7 @@ const DashboardPage = () => {
         </TabsList>
 
         <div className="mt-4">
-          <TabsContent value="my-habits" className="border-none bg-secondary">
+          <TabsContent value="my-habits" className="border-none">
             <MyHabits />
           </TabsContent>
 

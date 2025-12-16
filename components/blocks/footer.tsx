@@ -1,153 +1,87 @@
-import { Heart, Twitter, Github, Linkedin } from "lucide-react";
+import { Zap } from "lucide-react";
 
-export const Footer = () => {
+const FooterSection = () => {
+  const links = {
+    product: ["Features", "Pricing", "Changelog", "Roadmap"],
+    company: ["About", "Blog", "Careers", "Press"],
+    resources: ["Help Center", "API Docs", "Community", "Templates"],
+    legal: ["Privacy", "Terms", "Cookies", "GDPR"],
+  };
+
   return (
-    <footer className="border-t-4 border-foreground bg-card py-12">
-      <div className="container mx-auto px-4 sm:px-6">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-          <div>
-            <h3 className="text-2xl font-black mb-4">Strive</h3>
-            <p className="text-muted-foreground text-sm">
-              Level up your life, one habit at a time.
+    <footer className="py-16 bg-background border-t-4 border-foreground">
+      <div className="container mx-auto px-4">
+        <div className="grid md:grid-cols-5 gap-8 mb-12">
+          {/* Brand */}
+          <div className="md:col-span-1">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 bg-accent border-4 border-foreground shadow-brutal flex items-center justify-center">
+                <Zap className="w-5 h-5" strokeWidth={3} />
+              </div>
+              <span className="font-display text-xl">STRIVE</span>
+            </div>
+            <p className="font-mono text-xs text-muted-foreground leading-relaxed">
+              Building habits for people who are done making excuses.
             </p>
           </div>
 
-          <div>
-            <h4 className="font-black mb-4 uppercase text-sm">Product</h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <a
-                  href="#"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Features
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Pricing
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Roadmap
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Changelog
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-black mb-4 uppercase text-sm">Company</h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <a
-                  href="#"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  About
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Blog
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Careers
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Contact
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-black mb-4 uppercase text-sm">Legal</h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <a
-                  href="#"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Privacy
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Terms
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Security
-                </a>
-              </li>
-            </ul>
-          </div>
+          {/* Links */}
+          {Object.entries(links).map(([category, items]) => (
+            <div key={category}>
+              <h4 className="font-display text-sm mb-4 uppercase">
+                {category}
+              </h4>
+              <ul className="space-y-2">
+                {items.map((item) => (
+                  <li key={item}>
+                    <a
+                      href="#"
+                      className="font-mono text-xs text-muted-foreground hover:text-foreground hover:underline transition-colors"
+                    >
+                      {item}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
-        <div className="border-t-4 border-foreground pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-sm text-muted-foreground flex items-center gap-2">
-            Made with{" "}
-            <Heart className="w-4 h-4 fill-destructive text-destructive" /> by
-            HabitQuest Team
-          </p>
-
+        {/* Bottom bar */}
+        <div className="border-t-4 border-foreground pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="font-mono text-xs text-muted-foreground">
+            © 2024 STRIVE. ALL RIGHTS RESERVED. NO EXCUSES.
+          </div>
           <div className="flex gap-4">
-            <a
-              href="#"
-              className="w-10 h-10 bg-primary border-4 border-foreground shadow-neo hover:shadow-neo-md transition-all flex items-center justify-center hover-lift"
-            >
-              <Twitter className="w-5 h-5 text-foreground" />
-            </a>
-            <a
-              href="#"
-              className="w-10 h-10 bg-secondary border-4 border-foreground shadow-neo hover:shadow-neo-md transition-all flex items-center justify-center hover-lift"
-            >
-              <Github className="w-5 h-5 text-foreground" />
-            </a>
-            <a
-              href="#"
-              className="w-10 h-10 bg-accent border-4 border-foreground shadow-neo hover:shadow-neo-md transition-all flex items-center justify-center hover-lift"
-            >
-              <Linkedin className="w-5 h-5 text-foreground" />
-            </a>
+            {["TWITTER", "DISCORD", "GITHUB"].map((social) => (
+              <a
+                key={social}
+                href="#"
+                className="font-mono text-xs px-3 py-2 border-2 border-foreground hover:bg-brutal-yellow transition-colors"
+              >
+                {social}
+              </a>
+            ))}
           </div>
         </div>
+
+        {/* ASCII art */}
+        <pre className="font-mono text-xs text-center mt-12 text-muted-foreground hidden md:block">
+          {`
+░██████╗████████╗██████╗░██╗██╗░░░██╗███████╗
+██╔════╝╚══██╔══╝██╔══██╗██║██║░░░██║██╔════╝
+╚█████╗░░░░██║░░░██████╔╝██║╚██╗░██╔╝█████╗░░
+░╚═══██╗░░░██║░░░██╔══██╗██║░╚████╔╝░██╔══╝░░
+██████╔╝░░░██║░░░██║░░██║██║░░╚██╔╝░░███████╗
+╚═════╝░░░░╚═╝░░░╚═╝░░╚═╝╚═╝░░░╚═╝░░░╚══════╝
+
+█▀▄▀█ ▄▀█ █▀▄ █▀▀   █▄▄ █▄█   █▀ █░█ ▄▀█ █▄░█ ▄▀█ █▀▀ █▀█ █▀▄ █▀▀ █▀
+█░▀░█ █▀█ █▄▀ ██▄   █▄█ ░█░   ▄█ █▀█ █▀█ █░▀█ █▀█ █▄▄ █▄█ █▄▀ ██▄ ▄█
+`}
+        </pre>
       </div>
     </footer>
   );
 };
+
+export default FooterSection;

@@ -55,8 +55,9 @@ const HabitCard = ({ habit }: HabitCardProps) => {
   return (
     <div
       className={cn(
-        "border-3 px-8 py-6 retro-shadow bg-white",
-        habitColors.borderColor
+        "border-3 px-8 py-6 retro-shadow rounded-sm",
+        habitColors.borderColor,
+        habitColors.bgColor
       )}
     >
       <div className="flex items-center justify-between">
@@ -82,8 +83,8 @@ const HabitCard = ({ habit }: HabitCardProps) => {
               })
             }
             className={cn(
-              "rounded-full shadow-none p-2 h-8 w-8 flex items-center text-white justify-center active:scale-90 active:translate-none border-none",
-              getHabitColor(habit.color).buttonColor,
+              "rounded-full shadow-none p-2 h-8 w-8 flex items-center text-white justify-center active:scale-90 active:translate-none border-none bg-white",
+              getHabitColor(habit.color).textColor,
               getHabitColor(habit.color).buttonHoverColor
             )}
           >

@@ -52,13 +52,13 @@
 
 :root {
   --radius: 0.65rem;
-  --background: oklch(1 0 0);
+  --background: oklch(98.703% 0.01058 76.455);
   --foreground: oklch(0.141 0.005 285.823);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.141 0.005 285.823);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.141 0.005 285.823);
-  --primary: oklch(0.646 0.222 41.116);
+  --primary: oklch(89.073% 0.18324 96.195);
   --primary-foreground: oklch(0.98 0.016 73.684);
   --secondary: oklch(0.967 0.001 286.375);
   --secondary-foreground: oklch(0.21 0.006 285.885);
@@ -83,6 +83,42 @@
   --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
   --sidebar-border: oklch(0.92 0.004 286.32);
   --sidebar-ring: oklch(0.75 0.183 55.934);
+
+   /* Soft Blue - Primary */
+    --primary: 220 70% 55%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Soft Pink - Secondary */
+    --secondary: 340 50% 88%;
+    --secondary-foreground: 0 0% 15%;
+
+    /* Muted - Soft lavender */
+    --muted: 260 30% 92%;
+    --muted-foreground: 0 0% 35%;
+
+    /* Soft Green - Accent */
+    --accent: 145 50% 55%;
+    --accent-foreground: 0 0% 100%;
+
+    /* Soft Red */
+    --destructive: 0 65% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Borders - dark but not pure black */
+    --border: 220 15% 20%;
+    --input: 220 15% 20%;
+    --ring: 220 70% 55%;
+
+    /* Custom soft brutalist tokens */
+    --brutal-yellow: 48 85% 78%;
+    --brutal-red: 0 60% 72%;
+    --brutal-mint: 160 40% 88%;
+    --brutal-lavender: 270 40% 90%;
+    --brutal-peach: 25 70% 88%;
+    --brutal-shadow: 4px 4px 0px hsl(220 15% 20%);
+    --brutal-shadow-lg: 8px 8px 0px hsl(220 15% 20%);
+    --brutal-border: 4px solid hsl(220 15% 20%);
+    --brutal-border-thick: 6px solid hsl(220 15% 20%);
 }
 
 .dark {
@@ -140,7 +176,6 @@
   }
 }
 
-
 .font-pixel {
  font-family: "Pixel Emulator";
 }
@@ -169,3 +204,74 @@
 .dark .retro-inset {
   box-shadow: inset 2px 2px 0px rgba(255, 255, 255, 0.2), inset -2px -2px 0px rgba(0, 0, 0, 0.8);
 }
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+
+ .brutal-box {
+    border: 4px solid hsl(var(--foreground));
+    box-shadow: 4px 4px 0px hsl(var(--foreground));
+  }
+
+  .brutal-box-lg {
+    border: 6px solid hsl(var(--foreground));
+    box-shadow: 8px 8px 0px hsl(var(--foreground));
+  }
+
+  .brutal-hover {
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+  }
+
+  .brutal-hover:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px hsl(var(--foreground));
+  }
+
+  .brutal-hover:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px hsl(var(--foreground));
+  }
+
+  .text-stroke {
+    color: transparent;         
+  -webkit-text-stroke: 2px #1f2937;
+  }
+
+  .font-display {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 800;
+  }
+
+  .bg-brutal-yellow {
+    background-color: hsl(var(--brutal-yellow));
+  }
+
+  .bg-brutal-red {
+    background-color: hsl(var(--brutal-red));
+  }
+
+  .bg-brutal-mint {
+    background-color: hsl(var(--brutal-mint));
+  }
+
+  .bg-brutal-lavender {
+    background-color: hsl(var(--brutal-lavender));
+  }
+
+  .bg-brutal-peach {
+    background-color: hsl(var(--brutal-peach));
+  }
+
+  .grid-brutal {
+    background-image: 
+      linear-gradient(hsl(var(--foreground) / 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--foreground) / 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }

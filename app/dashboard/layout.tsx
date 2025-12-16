@@ -1,11 +1,16 @@
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import Topbar from "@/components/dashboard/topbar";
+import AppSidebar from "@/components/shareable/app-sidebar";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <main className="w-[70%] mx-auto py-12">
-      <Topbar />
-      {children}
-    </main>
+    <SidebarProvider>
+      <AppSidebar />
+      <main className="w-full">
+        <SidebarTrigger />
+        <main className="p-8">{children}</main>
+      </main>
+    </SidebarProvider>
   );
 };
 
