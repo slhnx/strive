@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils"
 
 // Base retro theme
 const retroBase =
-  "bg-white text-black dark:bg-black dark:text-white border-2 border-black dark:border-white rounded-none"
+  "bg-white text-black dark:bg-black dark:text-white border-2 border-black dark:border-white rounded-sm"
 
 // Retro shadow
 const retroShadow =

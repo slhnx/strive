@@ -15,7 +15,7 @@ const DashboardPage = () => {
         <TabsList
           className="
             w-full 
-            border-none border-b border-black dark:border-white
+            border-none border-b border-black dark:border-white bg-transparent
             py-3 
             flex flex-wrap items-center gap-3
             justify-between 

@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import RetroSpinner from "./retro-loader";
 
 const baseBg =
-  "bg-primary text-black dark:text-white dark:hover:text-white border border-black dark:border-white";
+  "bg-primary text-black dark:text-white dark:hover:text-white border border-black dark:border-white rounded-sm";
 
 // Primary highlight (hover/focus/active)
 const primaryHover = "hover:bg-primary hover:text-black dark:hover:bg-primary";
@@ -22,7 +22,7 @@ const retroShadow =
 const buttonVariants = cva(
   [
     // Base layout
-    "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium",
+    "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium rounded-sm",
     "disabled:pointer-events-none disabled:opacity-50",
     "[&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:shrink-0",
     "outline-none transition-none",

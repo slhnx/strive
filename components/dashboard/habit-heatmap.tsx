@@ -178,7 +178,7 @@ export default function HabitHeatmap({
               }}
               onBlur={() => setHover(null)}
               className={cn(
-                `border border-transparent cursor-default`,
+                'border border-transparent cursor-default rounded-sm',
                 getHabitProgressColor(d.count, habit.frequency, habit.color)
               )}
               title={`${d.date} — ${d.count} completions`}
@@ -206,11 +206,11 @@ export default function HabitHeatmap({
       <div className="mt-3 flex items-center gap-2 text-xs text-zinc-500">
         <span>Less</span>
         <div className="flex items-center gap-1">
-          <div className={cn("w-3 h-3 border", getColorClass(0))} />
-          <div className={cn("w-3 h-3 border", getColorClass(0.1))} />
-          <div className={cn("w-3 h-3 border", getColorClass(0.3))} />
-          <div className={cn("w-3 h-3 border", getColorClass(0.5))} />
-          <div className={cn("w-3 h-3 border", getColorClass(0.7))} />
+          <div className={cn("w-3 h-3 border", getHabitProgressColor(0, habit.frequency, habit.color))} />
+          <div className={cn("w-3 h-3 border", getHabitProgressColor(0.1, habit.frequency, habit.color))} />
+          <div className={cn("w-3 h-3 border", getHabitProgressColor(0.3, habit.frequency, habit.color))} />
+          <div className={cn("w-3 h-3 border", getHabitProgressColor(0.5, habit.frequency, habit.color))} />
+          <div className={cn("w-3 h-3 border", getHabitProgressColor(0.7, habit.frequency, habit.color))} />
         </div>
         <span>More</span>
       </div>

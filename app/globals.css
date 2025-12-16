@@ -109,8 +109,6 @@
     --input: 220 15% 20%;
     --ring: 220 70% 55%;
 
-    --radius: 0px; /* NO ROUNDED CORNERS */
-
     /* Custom soft brutalist tokens */
     --brutal-yellow: 48 85% 78%;
     --brutal-red: 0 60% 72%;

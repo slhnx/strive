@@ -8,9 +8,9 @@ import { cn } from "@/lib/utils";
 // BASE + THEMING (C1 RULESET)
 const baseBg = "bg-white text-black dark:bg-black dark:text-white";
 const hoverBg =
-  "hover:bg-primary hover:text-white dark:hover:bg-primary dark:hover:text-black";
+  "hover:bg-primary hover:text-black dark:hover:bg-primary dark:hover:text-black";
 const focusBg =
-  "focus:bg-primary focus:text-white dark:focus:bg-primary dark:focus:text-black";
+  "focus:bg-primary focus:text-black dark:focus:bg-primary dark:focus:text-black";
 const activeBg =
   "data-[state=active]:bg-primary data-[state=active]:text-white dark:data-[state=active]:text-black";
 
@@ -51,7 +51,7 @@ function DropdownMenuContent({
         sideOffset={sideOffset}
         className={cn(
           baseBg,
-          "border-2 border-black dark:border-white rounded-none shadow-none",
+          "border-2 border-black dark:border-white rounded-sm shadow-none",
           "z-50 min-w-[8rem] max-h-(--radix-dropdown-menu-content-available-height)",
           "overflow-x-hidden overflow-y-auto p-1",
           "data-[state=open]:animate-in data-[state=closed]:animate-out",
@@ -88,7 +88,7 @@ function DropdownMenuItem({
       data-inset={inset}
       className={cn(
         baseBg,
-        "cursor-default select-none flex items-center gap-2 px-2 py-1.5 rounded-none text-sm",
+        "cursor-default select-none flex items-center gap-2 px-2 py-1.5 text-sm rounded-sm",
         "border border-transparent", // keeps spacing consistent
         hoverBg,
         focusBg,

@@ -141,7 +141,7 @@ export const getHabitProgressColor = (
   habitColor: string
 ) => {
   const color = getHabitColor(habitColor);
-  if (count === 0) return "bg-gray-200";
+  if (count === 0) return "bg-white";
   const ratio = count / habitFrequency;
   if (ratio < 0.25) return color.progress.one;
   if (ratio < 0.5) return color.progress.three;
